@@ -1,0 +1,23 @@
+{
+  "slug": "house-sparrow",
+  "scientificName": "Passer domesticus",
+  "names": { "en": "House sparrow", "tr": "Serçe" },
+  "tier": "starter",
+  "unlock": { "path": "free", "findable": true, "priceNote": null, "discountPct": null },
+  "regions": ["europe", "turkiye", "north-america", "central-asia"],
+  "seasons": ["spring", "summer", "autumn", "winter"],
+  "palette": { "base": "#8C7A5E", "accent": "#C9A227", "wash": "#EFE9DC" },
+  "audio": { "call": "call-house-sparrow", "encoded": "sample-house-sparrow" },
+  "habitat": {
+    "en": "Streets, eaves, market squares — wherever people are.",
+    "tr": "Sokaklar, saçak altları, pazar yerleri — insan neredeyse orada."
+  },
+  "blurb": {
+    "en": "The bird you already know. Loud, social, and everywhere, which makes it the easiest first find in the app — most people can complete a sparrow identification without leaving their street.",
+    "tr": "Zaten tanıdığınız kuş. Gürültücü, sosyal ve her yerde. Bu yüzden uygulamadaki en kolay ilk keşif: çoğu kişi serçe tanımlamasını sokağından çıkmadan tamamlar."
+  },
+  "voiceNote": {
+    "en": "Short, bright, upward chirps with a little airiness. Reads as busy and close-by.",
+    "tr": "Kısa, parlak, yukarı doğru cıvıltılar; hafif havalı bir doku. Yakın ve telaşlı duyulur."
+  }
+}

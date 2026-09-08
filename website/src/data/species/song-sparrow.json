@@ -1,0 +1,23 @@
+{
+  "slug": "song-sparrow",
+  "scientificName": "Melospiza melodia",
+  "names": { "en": "Song sparrow", "tr": "Ötücü serçe" },
+  "tier": "basic",
+  "unlock": { "path": "field-or-purchase", "findable": true, "priceNote": "small", "discountPct": 100 },
+  "regions": ["north-america"],
+  "seasons": ["spring", "summer", "autumn", "winter"],
+  "palette": { "base": "#7B4A3C", "accent": "#C4703F", "wash": "#F0E6DE" },
+  "audio": { "call": "call-song-sparrow", "encoded": "sample-song-sparrow" },
+  "habitat": {
+    "en": "Marsh edges, hedgerows and overgrown field margins across most of North America.",
+    "tr": "Kuzey Amerika'nın büyük bölümünde sazlık kenarları, çalı çitleri ve otlanmış tarla kıyıları."
+  },
+  "blurb": {
+    "en": "The second voice in the catalog with a trained model behind it, and the newer of the two. Like the Bewick's wren it is a North American bird, so from Türkiye it is a purchase rather than a walk — but it is the one to listen to if you want to hear what the model does that a synthesis profile cannot.",
+    "tr": "Katalogda arkasında eğitilmiş bir model olan ikinci ses ve ikisinin daha yenisi. Bewick çıtkuşu gibi bu da bir Kuzey Amerika kuşu; yani Türkiye'den bakınca bir yürüyüş değil, bir satın alma. Ama modelin bir sentez profilinin yapamadığı şeyi duymak istiyorsanız dinlenecek ses bu."
+  },
+  "voiceNote": {
+    "en": "Two or three clear opening notes, then a loose buzzy trill that falls away. Wide-ranging and fast — its pitch moves further inside a single note than any other voice here.",
+    "tr": "İki üç net açılış notası, ardından savrularak düşen vızıltılı bir tril. Geniş aralıklı ve hızlı — tek bir nota içinde perdesi buradaki her sesten daha çok geziniyor."
+  }
+}

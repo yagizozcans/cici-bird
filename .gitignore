@@ -1,7 +1,7 @@
 # --- Datasets and derived caches -------------------------------------------
 # data/ is 3.6 GB of wild recordings (xeno-canto etc). Not ours to redistribute,
 # and too big for git. Everything below is REGENERABLE from it.
-data/
+/data/
 
 # Feature caches: ~380 MB, rebuilt by ml/train.py. They are fingerprinted
 # (v3|key|n_clips|band|win|...) precisely so a missing cache is safe and a
@@ -29,4 +29,4 @@ node_modules/
 
 # Vercel CLI
 .vercel
-.env*
+/.env*

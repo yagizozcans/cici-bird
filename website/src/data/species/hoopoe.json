@@ -1,0 +1,51 @@
+{
+  "slug": "hoopoe",
+  "scientificName": "Upupa epops",
+  "names": {
+    "en": "Eurasian hoopoe",
+    "tr": "İbibik"
+  },
+  "tier": "premium",
+  "unlock": {
+    "path": "purchase-only",
+    "findable": false,
+    "priceNote": "premium",
+    "discountPct": null
+  },
+  "findableNote": {
+    "en": "Field discovery is not available for the hoopoe at launch. Verified identification for premium species ships with the premium tier in v1.1; until then this voice is purchase-only.",
+    "tr": "İbibik için sahada keşif lansmanda mevcut değil. Premium türler için doğrulanmış tanımlama, v1.1'de premium katmanla birlikte gelecek; o zamana kadar bu ses yalnızca satın alınabilir."
+  },
+  "regions": [
+    "europe",
+    "turkiye",
+    "north-africa",
+    "central-asia"
+  ],
+  "seasons": [
+    "spring",
+    "summer",
+    "autumn"
+  ],
+  "palette": {
+    "base": "#2E2A25",
+    "accent": "#B5651D",
+    "wash": "#F3E7D3"
+  },
+  "audio": {
+    "call": "call-hoopoe",
+    "encoded": "sample-hoopoe"
+  },
+  "habitat": {
+    "en": "Open ground with scattered trees — orchards, olive groves, grazed pasture.",
+    "tr": "Dağınık ağaçlı açık araziler — meyve bahçeleri, zeytinlikler, otlaklar."
+  },
+  "blurb": {
+    "en": "Unmistakable on sight and almost comically simple on sound: three flat notes, repeated. Purchase-only in this release, and the catalog says so plainly rather than letting you hunt for something you cannot yet unlock.",
+    "tr": "Görünüşüyle karıştırılması imkânsız, sesiyle neredeyse komik derecede basit: tekrarlanan üç düz nota. Bu sürümde yalnızca satın alınabilir ve katalog bunu açıkça söyler; henüz açamayacağınız bir şeyin peşinde koşmanıza izin vermez."
+  },
+  "voiceNote": {
+    "en": "Nearly a pure tone. No glide, no vibrato, almost no harmonics — the cleanest signal we carry.",
+    "tr": "Neredeyse saf bir ton. Kayma yok, vibrato yok, harmonik neredeyse yok — taşıdığımız en temiz sinyal."
+  }
+}

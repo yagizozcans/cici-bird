@@ -1,0 +1,23 @@
+{
+  "slug": "blackbird",
+  "scientificName": "Turdus merula",
+  "names": { "en": "Common blackbird", "tr": "Karatavuk" },
+  "tier": "basic",
+  "unlock": { "path": "field-or-purchase", "findable": true, "priceNote": "small", "discountPct": 100 },
+  "regions": ["europe", "turkiye", "north-africa"],
+  "seasons": ["spring", "summer", "autumn", "winter"],
+  "palette": { "base": "#242021", "accent": "#E0A82E", "wash": "#E9E5DE" },
+  "audio": { "call": "call-blackbird", "encoded": "sample-blackbird" },
+  "habitat": {
+    "en": "Gardens, hedges, woodland. Sings from a high perch at dawn and again at dusk.",
+    "tr": "Bahçeler, çitler, ormanlık alanlar. Şafakta ve alacakaranlıkta yüksek bir daldan öter."
+  },
+  "blurb": {
+    "en": "The best-sounding common bird in Europe, and the one most people have heard without knowing what it was. Resident year-round, so unlike the swallow it can be found in any month.",
+    "tr": "Avrupa'nın en güzel öten yaygın kuşu ve çoğu insanın ne olduğunu bilmeden duyduğu tür. Yıl boyu kalıcıdır, bu yüzden kırlangıcın aksine her ay bulunabilir."
+  },
+  "voiceNote": {
+    "en": "Mellow and fluty, a gentle arch on every note with a slow vibrato. The easiest voice to listen to at length.",
+    "tr": "Yumuşak ve flüt gibi; her notada hafif bir kavis ve yavaş bir vibrato. Uzun süre dinlemesi en kolay ses."
+  }
+}

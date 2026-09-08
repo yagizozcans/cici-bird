@@ -1,0 +1,23 @@
+{
+  "slug": "nightingale",
+  "scientificName": "Luscinia megarhynchos",
+  "names": { "en": "Common nightingale", "tr": "Bülbül" },
+  "tier": "premium",
+  "unlock": { "path": "field-discount-or-purchase", "findable": true, "priceNote": "premium", "discountPct": 50 },
+  "regions": ["europe", "turkiye", "north-africa"],
+  "seasons": ["spring", "summer"],
+  "palette": { "base": "#5C4A32", "accent": "#B8791B", "wash": "#F0E8D9" },
+  "audio": { "call": "call-nightingale", "encoded": "sample-nightingale" },
+  "habitat": {
+    "en": "Dense scrub and woodland undergrowth. Sings through the night in late spring.",
+    "tr": "Sık çalılıklar ve orman altı bitki örtüsü. İlkbahar sonunda gece boyunca öter."
+  },
+  "blurb": {
+    "en": "Heard far more often than it is seen, and the reason half of Turkish poetry exists. A premium species: field identification earns 50% off rather than a free unlock, because a bird this wanted would otherwise empty the catalog of anything worth buying.",
+    "tr": "Görülmekten çok duyulan ve Türk şiirinin yarısının varlık sebebi olan kuş. Premium bir tür: sahada tanımlama ücretsiz açılım yerine %50 indirim kazandırır, çünkü bu kadar çok istenen bir kuş aksi hâlde katalogda satın alınmaya değer hiçbir şey bırakmazdı."
+  },
+  "voiceNote": {
+    "en": "A liquid whistle that arcs and warbles. This is the voice the encoder was designed against first.",
+    "tr": "Kavis çizip titreyen akışkan bir ıslık. Kodlayıcının ilk olarak karşısında tasarlandığı ses budur."
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "slug": "bewicks-wren",
+  "scientificName": "Thryomanes bewickii",
+  "names": { "en": "Bewick's wren", "tr": "Bewick çıtkuşu" },
+  "tier": "basic",
+  "unlock": { "path": "field-or-purchase", "findable": true, "priceNote": "small", "discountPct": 100 },
+  "regions": ["north-america"],
+  "seasons": ["spring", "summer", "autumn", "winter"],
+  "palette": { "base": "#7A5A3A", "accent": "#B08D57", "wash": "#EDE6DA" },
+  "audio": { "call": "call-bewicks-wren", "encoded": "sample-bewicks-wren" },
+  "habitat": {
+    "en": "Scrub, thickets and brush piles across the western United States and Mexico.",
+    "tr": "Batı Amerika Birleşik Devletleri ve Meksika boyunca çalılıklar, sık bitki örtüsü ve çalı yığınları."
+  },
+  "blurb": {
+    "en": "The only species in the launch catalog you cannot find in Türkiye — included deliberately, because the region filter is not decoration. If you are in Istanbul, this one is a purchase or a trip.",
+    "tr": "Lansman kataloğunda Türkiye'de bulamayacağınız tek tür — bilinçli olarak eklendi, çünkü bölge filtresi süs değil. İstanbul'daysanız bu tür ya bir satın alma ya da bir yolculuk demek."
+  },
+  "voiceNote": {
+    "en": "A rapid, bright trill — the fastest vibrato in the catalog, built from our own recording corpus.",
+    "tr": "Hızlı ve parlak bir tril — katalogdaki en hızlı vibrato, kendi kayıt derlemimizden üretildi."
+  }
+}

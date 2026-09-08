@@ -1,0 +1,23 @@
+{
+  "slug": "carrion-crow",
+  "scientificName": "Corvus corone",
+  "names": { "en": "Carrion crow", "tr": "Leş kargası" },
+  "tier": "starter",
+  "unlock": { "path": "free", "findable": true, "priceNote": null, "discountPct": null },
+  "regions": ["europe", "turkiye", "central-asia"],
+  "seasons": ["spring", "summer", "autumn", "winter"],
+  "palette": { "base": "#2B2B2E", "accent": "#7A6E52", "wash": "#DFDDD6" },
+  "audio": { "call": "call-carrion-crow", "encoded": "sample-carrion-crow" },
+  "habitat": {
+    "en": "Open country, coasts, city parks. Tolerant of people and unbothered by them.",
+    "tr": "Açık araziler, kıyılar, şehir parkları. İnsana toleranslı ve onunla ilgilenmez."
+  },
+  "blurb": {
+    "en": "Harsh, deliberate and impossible to mistake. Messages sent in crow arrive with a flatness that people find very funny for roughly one week, and then keep using anyway.",
+    "tr": "Sert, kasıtlı ve karıştırılması imkânsız. Karga sesiyle gönderilen mesajlar öyle düz bir tonla ulaşır ki, insanlar bunu yaklaşık bir hafta çok komik bulur ve sonra yine de kullanmayı sürdürür."
+  },
+  "voiceNote": {
+    "en": "Strong upper harmonics plus broadband noise — a croak rather than a whistle.",
+    "tr": "Güçlü üst harmonikler ve geniş bantlı gürültü — ıslık değil, gaklama."
+  }
+}

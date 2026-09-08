@@ -1,0 +1,23 @@
+{
+  "slug": "wood-pigeon",
+  "scientificName": "Columba palumbus",
+  "names": { "en": "Common wood pigeon", "tr": "Tahtalı güvercin" },
+  "tier": "starter",
+  "unlock": { "path": "free", "findable": true, "priceNote": null, "discountPct": null },
+  "regions": ["europe", "turkiye", "north-africa"],
+  "seasons": ["spring", "summer", "autumn", "winter"],
+  "palette": { "base": "#6E7480", "accent": "#A8623F", "wash": "#E8E7E4" },
+  "audio": { "call": "call-wood-pigeon", "encoded": "sample-wood-pigeon" },
+  "habitat": {
+    "en": "Parks, gardens and woodland edges; roosts on buildings in cities.",
+    "tr": "Parklar, bahçeler ve orman kenarları; şehirlerde bina çatılarında tüner."
+  },
+  "blurb": {
+    "en": "A five-note coo repeated with the patience of something that has nowhere to be. Common enough to be a reliable free unlock, distinctive enough that identification rarely fails.",
+    "tr": "Acelesi olmayan bir varlığın sabrıyla tekrarlanan beş notalık bir ötüş. Ücretsiz açılım için yeterince yaygın, tanımlamanın nadiren şaştığı kadar da ayırt edici."
+  },
+  "voiceNote": {
+    "en": "Soft attack, heavy low harmonics, almost no pitch movement. The most restful voice in the catalog.",
+    "tr": "Yumuşak giriş, ağır alt harmonikler, neredeyse hiç perde hareketi yok. Katalogdaki en dingin ses."
+  }
+}

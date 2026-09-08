@@ -1,0 +1,23 @@
+{
+  "slug": "northern-cardinal",
+  "scientificName": "Cardinalis cardinalis",
+  "names": { "en": "Northern cardinal", "tr": "Kırmızı kardinal" },
+  "tier": "basic",
+  "unlock": { "path": "field-or-purchase", "findable": true, "priceNote": "small", "discountPct": 100 },
+  "regions": ["north-america"],
+  "seasons": ["spring", "summer", "autumn", "winter"],
+  "palette": { "base": "#8E2436", "accent": "#D4453F", "wash": "#F6E3DF" },
+  "audio": { "call": "call-northern-cardinal", "encoded": "sample-northern-cardinal" },
+  "habitat": {
+    "en": "Woodland edges, gardens and dense shrubs across the eastern and central United States, and south into Mexico.",
+    "tr": "Amerika Birleşik Devletleri'nin doğusu ve ortasında, güneyde Meksika'ya uzanan orman kenarları, bahçeler ve sık çalılıklar."
+  },
+  "blurb": {
+    "en": "The third trained voice, and the clearest of them. Where the wren is buzzy and the sparrow ranges wildly, the cardinal whistles — and that turns out to matter to the model, not just the ear: it is the only one of the three the model renders cleanly across its entire singing range.",
+    "tr": "Üçüncü eğitilmiş ses ve en berrak olanı. Çıtkuşu vızıltılı, serçe savruk gezinirken kardinal ıslık çalıyor — ve bunun yalnızca kulak için değil model için de önemi var: üçü arasında modelin tüm şarkı aralığı boyunca temiz ürettiği tek ses bu."
+  },
+  "voiceNote": {
+    "en": "Long, pure, slurred whistles repeated in phrases — a falling 'cheer cheer cheer' or a rising 'birdy birdy birdy'. Lower than the other two voices here, and far more tonal.",
+    "tr": "Uzun, saf, kaydırmalı ıslıklar öbekler hâlinde yineleniyor — düşen bir 'çir çir çir' ya da yükselen bir 'birdi birdi birdi'. Buradaki diğer iki sesten daha pesli ve çok daha tonal."
+  }
+}

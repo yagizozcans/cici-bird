@@ -1,0 +1,23 @@
+{
+  "slug": "barn-swallow",
+  "scientificName": "Hirundo rustica",
+  "names": { "en": "Barn swallow", "tr": "Kır kırlangıcı" },
+  "tier": "basic",
+  "unlock": { "path": "field-or-purchase", "findable": true, "priceNote": "small", "discountPct": 100 },
+  "regions": ["europe", "turkiye", "north-america", "north-africa"],
+  "seasons": ["spring", "summer"],
+  "palette": { "base": "#1F3A5F", "accent": "#C56A3E", "wash": "#E6EBF0" },
+  "audio": { "call": "call-barn-swallow", "encoded": "sample-barn-swallow" },
+  "habitat": {
+    "en": "Barns, bridges and open farmland; hunts low over fields and water.",
+    "tr": "Ahırlar, köprüler ve açık tarım arazileri; tarla ve su üstünde alçaktan avlanır."
+  },
+  "blurb": {
+    "en": "A migrant, which means the unlock has a season. Swallows arrive in Türkiye through March and April and are gone by October — a species you can only find by being outside at the right time of year.",
+    "tr": "Göçmen bir tür, yani açılımın bir mevsimi var. Kırlangıçlar Türkiye'ye mart–nisan boyunca gelir ve ekimde gider — ancak yılın doğru zamanında dışarıda olursanız bulabileceğiniz bir tür."
+  },
+  "voiceNote": {
+    "en": "Fast, high, upward-sweeping twitter with a rapid flutter. The quickest voice we ship.",
+    "tr": "Hızlı, tiz, yukarı süpüren ve çabuk titreşen bir cıvıltı. Yayınladığımız en hızlı ses."
+  }
+}
