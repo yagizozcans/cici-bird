@@ -1,0 +1,6 @@
+# ml/ and engine/. Pinned to what the wren, sparrow and cardinal checkpoints
+# were actually trained and rendered with (Python 3.9.6).
+torch==2.8.0
+numpy==2.0.2
+scipy==1.13.1
+soundfile==0.13.1

@@ -1,0 +1,9 @@
+node_modules
+.next
+out
+.env.local
+next-env.d.ts
+public/sitemap.xml
+public/sitemap-*.xml
+public/robots.txt
+tsconfig.tsbuildinfo

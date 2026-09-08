@@ -1,0 +1,3456 @@
+{
+  "generatedAt": "2026-09-08T14:15:52+00:00",
+  "generator": "website/scripts/generate_audio.py",
+  "engine": {
+    "protocol": "engine/birdsong_codec.py",
+    "voices": "engine/voices.py",
+    "sampleRate": 22050,
+    "symbolSeconds": 0.12,
+    "freqMinHz": 800.0,
+    "freqMaxHz": 4400.0
+  },
+  "trainedVoices": {
+    "bewicks-wren": {
+      "model": "ml/checkpoints/wren.pt",
+      "corpus": "data/bewicks_wren",
+      "corpusSize": 250,
+      "sampleRate": 22050,
+      "identification": {
+        "messageScore": 0.212,
+        "wildScore": 0.0089,
+        "threshold": 0.163,
+        "separated": true
+      }
+    },
+    "song-sparrow": {
+      "model": "ml/checkpoints/sparrow_win256.pt",
+      "corpus": "data/song_sparrow",
+      "corpusSize": 250,
+      "sampleRate": 22050,
+      "identification": {
+        "messageScore": 0.2048,
+        "wildScore": 0.0529,
+        "threshold": 0.153,
+        "separated": true
+      }
+    },
+    "northern-cardinal": {
+      "model": "ml/checkpoints/cardinal_best250.pt",
+      "corpus": "data/northern_cardinal",
+      "corpusSize": 250,
+      "sampleRate": 22050,
+      "identification": {
+        "messageScore": 0.2759,
+        "wildScore": 0.0003,
+        "threshold": 0.239,
+        "separated": true
+      }
+    }
+  },
+  "voiceProfiles": {
+    "nightingale": {
+      "glideHz": 70,
+      "glideShape": "arch",
+      "vibratoHz": 28,
+      "vibratoDepth": 18,
+      "harmonics": [
+        [
+          1,
+          1.0
+        ],
+        [
+          2,
+          0.25
+        ]
+      ],
+      "noise": 0.0
+    },
+    "house-sparrow": {
+      "glideHz": 90,
+      "glideShape": "up",
+      "vibratoHz": 0,
+      "vibratoDepth": 0,
+      "harmonics": [
+        [
+          1,
+          1.0
+        ],
+        [
+          2,
+          0.4
+        ],
+        [
+          3,
+          0.15
+        ]
+      ],
+      "noise": 0.04
+    },
+    "carrion-crow": {
+      "glideHz": 40,
+      "glideShape": "down",
+      "vibratoHz": 0,
+      "vibratoDepth": 0,
+      "harmonics": [
+        [
+          1,
+          1.0
+        ],
+        [
+          2,
+          0.7
+        ],
+        [
+          3,
+          0.5
+        ],
+        [
+          4,
+          0.3
+        ]
+      ],
+      "noise": 0.12
+    },
+    "wood-pigeon": {
+      "glideHz": 15,
+      "glideShape": "down",
+      "vibratoHz": 0,
+      "vibratoDepth": 0,
+      "harmonics": [
+        [
+          1,
+          1.0
+        ],
+        [
+          2,
+          0.55
+        ],
+        [
+          3,
+          0.3
+        ],
+        [
+          4,
+          0.12
+        ]
+      ],
+      "noise": 0.02
+    },
+    "barn-swallow": {
+      "glideHz": 140,
+      "glideShape": "up",
+      "vibratoHz": 42,
+      "vibratoDepth": 12,
+      "harmonics": [
+        [
+          1,
+          1.0
+        ],
+        [
+          2,
+          0.18
+        ]
+      ],
+      "noise": 0.06
+    },
+    "blackbird": {
+      "glideHz": 55,
+      "glideShape": "arch",
+      "vibratoHz": 12,
+      "vibratoDepth": 10,
+      "harmonics": [
+        [
+          1,
+          1.0
+        ],
+        [
+          2,
+          0.3
+        ],
+        [
+          3,
+          0.08
+        ]
+      ],
+      "noise": 0.0
+    },
+    "bewicks-wren": {
+      "glideHz": 95,
+      "glideShape": "arch",
+      "vibratoHz": 55,
+      "vibratoDepth": 26,
+      "harmonics": [
+        [
+          1,
+          1.0
+        ],
+        [
+          2,
+          0.35
+        ],
+        [
+          3,
+          0.14
+        ]
+      ],
+      "noise": 0.03
+    },
+    "song-sparrow": {
+      "glideHz": 80,
+      "glideShape": "down",
+      "vibratoHz": 38,
+      "vibratoDepth": 20,
+      "harmonics": [
+        [
+          1,
+          1.0
+        ],
+        [
+          2,
+          0.28
+        ],
+        [
+          3,
+          0.1
+        ]
+      ],
+      "noise": 0.05
+    },
+    "northern-cardinal": {
+      "glideHz": 210,
+      "glideShape": "down",
+      "vibratoHz": 8,
+      "vibratoDepth": 6,
+      "harmonics": [
+        [
+          1,
+          1.0
+        ],
+        [
+          2,
+          0.22
+        ],
+        [
+          3,
+          0.07
+        ]
+      ],
+      "noise": 0.02
+    },
+    "hoopoe": {
+      "glideHz": 0,
+      "glideShape": "arch",
+      "vibratoHz": 0,
+      "vibratoDepth": 0,
+      "harmonics": [
+        [
+          1,
+          1.0
+        ],
+        [
+          2,
+          0.06
+        ]
+      ],
+      "noise": 0.0
+    }
+  },
+  "assets": {
+    "demo-human": {
+      "id": "demo-human",
+      "src": "/audio/demo/human.m4a",
+      "mime": "audio/mp4",
+      "bytes": 18603,
+      "credit": {
+        "title": "Spoken source sentence",
+        "kind": "human-speech",
+        "source": "macOS speech synthesis (`say`)",
+        "license": "Placeholder asset \u2014 not a human recording",
+        "verified": false,
+        "note": "TODO before launch: replace with a real recorded human voice. This is text-to-speech standing in for the 'pre-recorded human sentence' the landing demo requires (website.md \u00a73)."
+      },
+      "text": "meet me by the river at six.",
+      "durationSec": 1.595
+    },
+    "demo-bewicks-wren": {
+      "id": "demo-bewicks-wren",
+      "src": "/audio/demo/bewicks-wren.m4a",
+      "mime": "audio/mp4",
+      "bytes": 42794,
+      "credit": {
+        "title": "Encoded message, trained wren voice",
+        "kind": "encoded-message",
+        "source": "CICI BIRD DDSP model ml/checkpoints/wren.pt, trained on the Bewick's wren corpus in data/bewicks_wren",
+        "license": "Model output, but built on non-commercially licensed recordings",
+        "verified": false,
+        "note": "The audio is the model's own output, but its note motifs are real note shapes lifted out of the training recordings, and ALL 250 clips in that selection are licensed non-commercially (CC BY-NC-SA), 44 of them NoDerivatives. Unlike the sparrow there is no permissive subset to fall back on: the whole 893-clip Bewick's wren corpus contains only 11 CC BY-SA clips. TODO before launch: obtain commercial permission from the recordists whose notes are actually borrowed, or source new recordings."
+      },
+      "speciesSlug": "bewicks-wren",
+      "synthesis": {
+        "method": "neural-ddsp",
+        "engine": "ml/generate.py",
+        "model": "ml/checkpoints/wren.pt",
+        "trainedOn": "250 ranked clips from 51 Bewick's wren recordings (data/bewicks_wren, ml/selections/wren_best250.json)",
+        "decoder": "ml/generate.py (motif templates + Viterbi alignment)"
+      },
+      "durationSec": 4.699,
+      "text": "meet me by the river at six.",
+      "normalizedText": "meet me by the river at six.",
+      "decodedText": "meet me by the river at six.",
+      "decodeAccuracy": 1.0,
+      "cues": {
+        "chars": [
+          {
+            "t0": 0.0,
+            "t1": 0.2757,
+            "text": "m"
+          },
+          {
+            "t0": 0.3106,
+            "t1": 0.4963,
+            "text": "e"
+          },
+          {
+            "t0": 0.5457,
+            "t1": 0.7314,
+            "text": "e"
+          },
+          {
+            "t0": 0.7692,
+            "t1": 0.8882,
+            "text": "t"
+          },
+          {
+            "t0": 0.8882,
+            "t1": 1.0391,
+            "text": " "
+          },
+          {
+            "t0": 1.0391,
+            "t1": 1.3148,
+            "text": "m"
+          },
+          {
+            "t0": 1.3642,
+            "t1": 1.5499,
+            "text": "e"
+          },
+          {
+            "t0": 1.5499,
+            "t1": 1.6718,
+            "text": " "
+          },
+          {
+            "t0": 1.6718,
+            "t1": 1.7444,
+            "text": "b"
+          },
+          {
+            "t0": 1.7879,
+            "t1": 1.9737,
+            "text": "y"
+          },
+          {
+            "t0": 1.9737,
+            "t1": 2.1449,
+            "text": " "
+          },
+          {
+            "t0": 2.1449,
+            "t1": 2.2639,
+            "text": "t"
+          },
+          {
+            "t0": 2.293,
+            "t1": 2.4294,
+            "text": "h"
+          },
+          {
+            "t0": 2.4584,
+            "t1": 2.6442,
+            "text": "e"
+          },
+          {
+            "t0": 2.6442,
+            "t1": 2.8386,
+            "text": " "
+          },
+          {
+            "t0": 2.8386,
+            "t1": 2.978,
+            "text": "r"
+          },
+          {
+            "t0": 3.0215,
+            "t1": 3.1231,
+            "text": "i"
+          },
+          {
+            "t0": 3.1608,
+            "t1": 3.2856,
+            "text": "v"
+          },
+          {
+            "t0": 3.3088,
+            "t1": 3.4946,
+            "text": "e"
+          },
+          {
+            "t0": 3.5178,
+            "t1": 3.6571,
+            "text": "r"
+          },
+          {
+            "t0": 3.6571,
+            "t1": 3.7616,
+            "text": " "
+          },
+          {
+            "t0": 3.7616,
+            "t1": 3.8545,
+            "text": "a"
+          },
+          {
+            "t0": 3.8777,
+            "t1": 3.9967,
+            "text": "t"
+          },
+          {
+            "t0": 3.9967,
+            "t1": 4.1941,
+            "text": " "
+          },
+          {
+            "t0": 4.1941,
+            "t1": 4.2928,
+            "text": "s"
+          },
+          {
+            "t0": 4.3392,
+            "t1": 4.4408,
+            "text": "i"
+          },
+          {
+            "t0": 4.4902,
+            "t1": 4.5598,
+            "text": "x"
+          },
+          {
+            "t0": 4.5976,
+            "t1": 4.6991,
+            "text": "."
+          }
+        ],
+        "words": [
+          {
+            "t0": 0.0,
+            "t1": 0.8882,
+            "text": "meet"
+          },
+          {
+            "t0": 1.0391,
+            "t1": 1.5499,
+            "text": "me"
+          },
+          {
+            "t0": 1.6718,
+            "t1": 1.9737,
+            "text": "by"
+          },
+          {
+            "t0": 2.1449,
+            "t1": 2.6442,
+            "text": "the"
+          },
+          {
+            "t0": 2.8386,
+            "t1": 3.6571,
+            "text": "river"
+          },
+          {
+            "t0": 3.7616,
+            "t1": 3.9967,
+            "text": "at"
+          },
+          {
+            "t0": 4.1941,
+            "t1": 4.6991,
+            "text": "six."
+          }
+        ]
+      }
+    },
+    "demo-song-sparrow": {
+      "id": "demo-song-sparrow",
+      "src": "/audio/demo/song-sparrow.m4a",
+      "mime": "audio/mp4",
+      "bytes": 47589,
+      "credit": {
+        "title": "Encoded message, trained song sparrow voice",
+        "kind": "encoded-message",
+        "source": "CICI BIRD DDSP model ml/checkpoints/sparrow_win256.pt, trained on 250 clips from 114 recordings in data/song_sparrow",
+        "license": "UNCONFIRMED \u2014 see note",
+        "verified": false,
+        "note": "The audio is the model's own output, but its note motifs are real note shapes lifted out of the training recordings, and 1192 of the 1256 clips in that corpus are licensed non-commercially (CC BY-NC-SA or BY-NC-ND); some are NoDerivatives. TODO before launch: either retrain and rebuild the motif bank from the 64 CC BY-SA clips only, or obtain commercial permission from the recordists whose notes are actually borrowed."
+      },
+      "speciesSlug": "song-sparrow",
+      "synthesis": {
+        "method": "neural-ddsp",
+        "engine": "ml/generate_species.py",
+        "model": "ml/checkpoints/sparrow_win256.pt",
+        "trainedOn": "250 clips from 114 song sparrow recordings (data/song_sparrow)",
+        "decoder": "ml/generate_species.py (motif templates + Viterbi alignment)"
+      },
+      "durationSec": 5.338,
+      "text": "meet me by the river at six.",
+      "normalizedText": "meet me by the river at six.",
+      "decodedText": "meet me by the river at six.",
+      "decodeAccuracy": 1.0,
+      "cues": {
+        "chars": [
+          {
+            "t0": 0.0,
+            "t1": 0.1248,
+            "text": "m"
+          },
+          {
+            "t0": 0.1741,
+            "t1": 0.2786,
+            "text": "e"
+          },
+          {
+            "t0": 0.3454,
+            "t1": 0.4499,
+            "text": "e"
+          },
+          {
+            "t0": 0.4992,
+            "t1": 0.6531,
+            "text": "t"
+          },
+          {
+            "t0": 0.6531,
+            "t1": 0.8214,
+            "text": " "
+          },
+          {
+            "t0": 0.8214,
+            "t1": 0.9462,
+            "text": "m"
+          },
+          {
+            "t0": 1.013,
+            "t1": 1.1175,
+            "text": "e"
+          },
+          {
+            "t0": 1.1175,
+            "t1": 1.2597,
+            "text": " "
+          },
+          {
+            "t0": 1.2597,
+            "t1": 1.4832,
+            "text": "b"
+          },
+          {
+            "t0": 1.5412,
+            "t1": 1.7009,
+            "text": "y"
+          },
+          {
+            "t0": 1.7009,
+            "t1": 1.8895,
+            "text": " "
+          },
+          {
+            "t0": 1.8895,
+            "t1": 2.0434,
+            "text": "t"
+          },
+          {
+            "t0": 2.084,
+            "t1": 2.1798,
+            "text": "h"
+          },
+          {
+            "t0": 2.2204,
+            "t1": 2.3249,
+            "text": "e"
+          },
+          {
+            "t0": 2.3249,
+            "t1": 2.5397,
+            "text": " "
+          },
+          {
+            "t0": 2.5397,
+            "t1": 2.8619,
+            "text": "r"
+          },
+          {
+            "t0": 2.9228,
+            "t1": 3.0099,
+            "text": "i"
+          },
+          {
+            "t0": 3.0621,
+            "t1": 3.3901,
+            "text": "v"
+          },
+          {
+            "t0": 3.422,
+            "t1": 3.5265,
+            "text": "e"
+          },
+          {
+            "t0": 3.5585,
+            "t1": 3.8806,
+            "text": "r"
+          },
+          {
+            "t0": 3.8806,
+            "t1": 4.0054,
+            "text": " "
+          },
+          {
+            "t0": 4.0054,
+            "t1": 4.1302,
+            "text": "a"
+          },
+          {
+            "t0": 4.1651,
+            "t1": 4.3189,
+            "text": "t"
+          },
+          {
+            "t0": 4.3189,
+            "t1": 4.5337,
+            "text": " "
+          },
+          {
+            "t0": 4.5337,
+            "t1": 4.6614,
+            "text": "s"
+          },
+          {
+            "t0": 4.7282,
+            "t1": 4.8152,
+            "text": "i"
+          },
+          {
+            "t0": 4.8849,
+            "t1": 5.0213,
+            "text": "x"
+          },
+          {
+            "t0": 5.0765,
+            "t1": 5.3377,
+            "text": "."
+          }
+        ],
+        "words": [
+          {
+            "t0": 0.0,
+            "t1": 0.6531,
+            "text": "meet"
+          },
+          {
+            "t0": 0.8214,
+            "t1": 1.1175,
+            "text": "me"
+          },
+          {
+            "t0": 1.2597,
+            "t1": 1.7009,
+            "text": "by"
+          },
+          {
+            "t0": 1.8895,
+            "t1": 2.3249,
+            "text": "the"
+          },
+          {
+            "t0": 2.5397,
+            "t1": 3.8806,
+            "text": "river"
+          },
+          {
+            "t0": 4.0054,
+            "t1": 4.3189,
+            "text": "at"
+          },
+          {
+            "t0": 4.5337,
+            "t1": 5.3377,
+            "text": "six."
+          }
+        ]
+      }
+    },
+    "demo-northern-cardinal": {
+      "id": "demo-northern-cardinal",
+      "src": "/audio/demo/northern-cardinal.m4a",
+      "mime": "audio/mp4",
+      "bytes": 42269,
+      "credit": {
+        "title": "Encoded message, trained northern cardinal voice",
+        "kind": "encoded-message",
+        "source": "CICI BIRD DDSP model ml/checkpoints/cardinal_best250.pt, trained on 250 clips from 47 recordings in data/northern_cardinal",
+        "license": "UNCONFIRMED \u2014 see note",
+        "verified": false,
+        "note": "The audio is the model's own output, but its note motifs are real note shapes lifted out of the training recordings, and 243 of the 250 selected clips are licensed non-commercially (176 CC BY-NC-SA, 67 BY-NC-ND); only 7 are CC BY-SA. The whole 1074-clip corpus holds just 24 permissive clips, from 2 recordings. TODO before launch: either retrain and rebuild the motif bank from those 24 only \u2014 which is far below the 250 this voice was measured at \u2014 or obtain commercial permission from the recordists whose notes are borrowed."
+      },
+      "speciesSlug": "northern-cardinal",
+      "synthesis": {
+        "method": "neural-ddsp",
+        "engine": "ml/generate_species.py",
+        "model": "ml/checkpoints/cardinal_best250.pt",
+        "trainedOn": "250 ranked clips from 47 northern cardinal recordings (data/northern_cardinal, ml/selections/cardinal_best250.json)",
+        "decoder": "ml/generate_species.py (motif templates + Viterbi alignment)"
+      },
+      "durationSec": 4.65,
+      "text": "meet me by the river at six.",
+      "normalizedText": "meet me by the river at six.",
+      "decodedText": "meet me by the river at six.",
+      "decodeAccuracy": 1.0,
+      "cues": {
+        "chars": [
+          {
+            "t0": 0.0,
+            "t1": 0.1277,
+            "text": "m"
+          },
+          {
+            "t0": 0.1654,
+            "t1": 0.3164,
+            "text": "e"
+          },
+          {
+            "t0": 0.3686,
+            "t1": 0.5195,
+            "text": "e"
+          },
+          {
+            "t0": 0.5573,
+            "t1": 0.6763,
+            "text": "t"
+          },
+          {
+            "t0": 0.6763,
+            "t1": 0.8446,
+            "text": " "
+          },
+          {
+            "t0": 0.8446,
+            "t1": 0.9723,
+            "text": "m"
+          },
+          {
+            "t0": 1.0275,
+            "t1": 1.1784,
+            "text": "e"
+          },
+          {
+            "t0": 1.1784,
+            "t1": 1.3206,
+            "text": " "
+          },
+          {
+            "t0": 1.3206,
+            "t1": 1.399,
+            "text": "b"
+          },
+          {
+            "t0": 1.4454,
+            "t1": 1.608,
+            "text": "y"
+          },
+          {
+            "t0": 1.608,
+            "t1": 1.7966,
+            "text": " "
+          },
+          {
+            "t0": 1.7966,
+            "t1": 1.9156,
+            "text": "t"
+          },
+          {
+            "t0": 1.9476,
+            "t1": 2.1246,
+            "text": "h"
+          },
+          {
+            "t0": 2.1566,
+            "t1": 2.3075,
+            "text": "e"
+          },
+          {
+            "t0": 2.3075,
+            "t1": 2.5223,
+            "text": " "
+          },
+          {
+            "t0": 2.5223,
+            "t1": 2.6093,
+            "text": "r"
+          },
+          {
+            "t0": 2.6558,
+            "t1": 2.8502,
+            "text": "i"
+          },
+          {
+            "t0": 2.8909,
+            "t1": 3.0012,
+            "text": "v"
+          },
+          {
+            "t0": 3.0244,
+            "t1": 3.1753,
+            "text": "e"
+          },
+          {
+            "t0": 3.1985,
+            "t1": 3.2856,
+            "text": "r"
+          },
+          {
+            "t0": 3.2856,
+            "t1": 3.4104,
+            "text": " "
+          },
+          {
+            "t0": 3.4104,
+            "t1": 3.4946,
+            "text": "a"
+          },
+          {
+            "t0": 3.5178,
+            "t1": 3.6368,
+            "text": "t"
+          },
+          {
+            "t0": 3.6368,
+            "t1": 3.8516,
+            "text": " "
+          },
+          {
+            "t0": 3.8516,
+            "t1": 4.0112,
+            "text": "s"
+          },
+          {
+            "t0": 4.0635,
+            "t1": 4.258,
+            "text": "i"
+          },
+          {
+            "t0": 4.3131,
+            "t1": 4.4873,
+            "text": "x"
+          },
+          {
+            "t0": 4.5279,
+            "t1": 4.6498,
+            "text": "."
+          }
+        ],
+        "words": [
+          {
+            "t0": 0.0,
+            "t1": 0.6763,
+            "text": "meet"
+          },
+          {
+            "t0": 0.8446,
+            "t1": 1.1784,
+            "text": "me"
+          },
+          {
+            "t0": 1.3206,
+            "t1": 1.608,
+            "text": "by"
+          },
+          {
+            "t0": 1.7966,
+            "t1": 2.3075,
+            "text": "the"
+          },
+          {
+            "t0": 2.5223,
+            "t1": 3.2856,
+            "text": "river"
+          },
+          {
+            "t0": 3.4104,
+            "t1": 3.6368,
+            "text": "at"
+          },
+          {
+            "t0": 3.8516,
+            "t1": 4.6498,
+            "text": "six."
+          }
+        ]
+      }
+    },
+    "call-nightingale": {
+      "id": "call-nightingale",
+      "src": "/audio/species/nightingale-call.m4a",
+      "mime": "audio/mp4",
+      "bytes": 44757,
+      "credit": {
+        "title": "Common nightingale, field recording",
+        "kind": "real-call",
+        "source": "xeno-canto",
+        "license": "UNCONFIRMED",
+        "verified": false,
+        "sourceId": "XC546355",
+        "sourceUrl": "https://xeno-canto.org/546355",
+        "note": "TODO before launch: confirm recordist, licence and required attribution string for XC546355 with xeno-canto, or replace this asset with a synthesized reference call."
+      },
+      "speciesSlug": "nightingale",
+      "durationSec": 5.0
+    },
+    "call-bewicks-wren": {
+      "id": "call-bewicks-wren",
+      "src": "/audio/species/bewicks-wren-call.m4a",
+      "mime": "audio/mp4",
+      "bytes": 28018,
+      "credit": {
+        "title": "Bewick's wren, field recording",
+        "kind": "real-call",
+        "source": "Training corpus in data/bewicks_wren",
+        "license": "UNCONFIRMED",
+        "verified": false,
+        "sourceId": "173148",
+        "note": "TODO before launch: trace this clip to its original archive entry (xeno-canto or Macaulay Library), record recordist and licence, or replace with a synthesized reference call."
+      },
+      "speciesSlug": "bewicks-wren",
+      "durationSec": 3.0
+    },
+    "call-song-sparrow": {
+      "id": "call-song-sparrow",
+      "src": "/audio/species/song-sparrow-call.m4a",
+      "mime": "audio/mp4",
+      "bytes": 28282,
+      "credit": {
+        "title": "Song sparrow, field recording",
+        "kind": "real-call",
+        "source": "xeno-canto",
+        "license": "CC BY-SA 3.0",
+        "verified": true,
+        "sourceId": "XC142621",
+        "sourceUrl": "https://xeno-canto.org/142621",
+        "recordist": "Jonathon Jongsma",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+        "note": "Recorded 2013-07-11, Union Bay Campground, Porcupine Mountains, Michigan, United States. Excerpted; ShareAlike applies to this excerpt."
+      },
+      "speciesSlug": "song-sparrow",
+      "durationSec": 3.0
+    },
+    "call-northern-cardinal": {
+      "id": "call-northern-cardinal",
+      "src": "/audio/species/northern-cardinal-call.m4a",
+      "mime": "audio/mp4",
+      "bytes": 29231,
+      "credit": {
+        "title": "Northern cardinal, field recording",
+        "kind": "real-call",
+        "source": "xeno-canto",
+        "license": "CC BY-SA 3.0",
+        "verified": true,
+        "sourceId": "XC125284",
+        "sourceUrl": "https://xeno-canto.org/125284",
+        "recordist": "Jonathon Jongsma",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+        "note": "Recorded 2013-03-16, Powderhorn Park, Minneapolis, Hennepin, Minnesota, United States. Excerpted; ShareAlike applies to this excerpt."
+      },
+      "speciesSlug": "northern-cardinal",
+      "durationSec": 3.0
+    },
+    "call-house-sparrow": {
+      "id": "call-house-sparrow",
+      "src": "/audio/species/house-sparrow-call.m4a",
+      "mime": "audio/mp4",
+      "bytes": 12552,
+      "credit": {
+        "title": "Synthesized reference call",
+        "kind": "synth-reference",
+        "source": "CICI BIRD synthesis engine (engine/voices.py)",
+        "license": "\u00a9 CICI \u2014 original synthesis, no third-party rights",
+        "verified": true,
+        "note": "Parametric synthesis from this species' voice profile, not a field recording. Placeholder until a licensed recording is acquired."
+      },
+      "speciesSlug": "house-sparrow",
+      "durationSec": 1.267
+    },
+    "call-wood-pigeon": {
+      "id": "call-wood-pigeon",
+      "src": "/audio/species/wood-pigeon-call.m4a",
+      "mime": "audio/mp4",
+      "bytes": 19471,
+      "credit": {
+        "title": "Synthesized reference call",
+        "kind": "synth-reference",
+        "source": "CICI BIRD synthesis engine (engine/voices.py)",
+        "license": "\u00a9 CICI \u2014 original synthesis, no third-party rights",
+        "verified": true,
+        "note": "Parametric synthesis from this species' voice profile, not a field recording. Placeholder until a licensed recording is acquired."
+      },
+      "speciesSlug": "wood-pigeon",
+      "durationSec": 2.104
+    },
+    "call-carrion-crow": {
+      "id": "call-carrion-crow",
+      "src": "/audio/species/carrion-crow-call.m4a",
+      "mime": "audio/mp4",
+      "bytes": 11632,
+      "credit": {
+        "title": "Synthesized reference call",
+        "kind": "synth-reference",
+        "source": "CICI BIRD synthesis engine (engine/voices.py)",
+        "license": "\u00a9 CICI \u2014 original synthesis, no third-party rights",
+        "verified": true,
+        "note": "Parametric synthesis from this species' voice profile, not a field recording. Placeholder until a licensed recording is acquired."
+      },
+      "speciesSlug": "carrion-crow",
+      "durationSec": 1.042
+    },
+    "call-barn-swallow": {
+      "id": "call-barn-swallow",
+      "src": "/audio/species/barn-swallow-call.m4a",
+      "mime": "audio/mp4",
+      "bytes": 13240,
+      "credit": {
+        "title": "Synthesized reference call",
+        "kind": "synth-reference",
+        "source": "CICI BIRD synthesis engine (engine/voices.py)",
+        "license": "\u00a9 CICI \u2014 original synthesis, no third-party rights",
+        "verified": true,
+        "note": "Parametric synthesis from this species' voice profile, not a field recording. Placeholder until a licensed recording is acquired."
+      },
+      "speciesSlug": "barn-swallow",
+      "durationSec": 1.352
+    },
+    "call-blackbird": {
+      "id": "call-blackbird",
+      "src": "/audio/species/blackbird-call.m4a",
+      "mime": "audio/mp4",
+      "bytes": 11869,
+      "credit": {
+        "title": "Synthesized reference call",
+        "kind": "synth-reference",
+        "source": "CICI BIRD synthesis engine (engine/voices.py)",
+        "license": "\u00a9 CICI \u2014 original synthesis, no third-party rights",
+        "verified": true,
+        "note": "Parametric synthesis from this species' voice profile, not a field recording. Placeholder until a licensed recording is acquired."
+      },
+      "speciesSlug": "blackbird",
+      "durationSec": 1.804
+    },
+    "call-hoopoe": {
+      "id": "call-hoopoe",
+      "src": "/audio/species/hoopoe-call.m4a",
+      "mime": "audio/mp4",
+      "bytes": 10745,
+      "credit": {
+        "title": "Synthesized reference call",
+        "kind": "synth-reference",
+        "source": "CICI BIRD synthesis engine (engine/voices.py)",
+        "license": "\u00a9 CICI \u2014 original synthesis, no third-party rights",
+        "verified": true,
+        "note": "Parametric synthesis from this species' voice profile, not a field recording. Placeholder until a licensed recording is acquired."
+      },
+      "speciesSlug": "hoopoe",
+      "durationSec": 1.552
+    },
+    "sample-house-sparrow": {
+      "id": "sample-house-sparrow",
+      "src": "/audio/species/house-sparrow-encoded.m4a",
+      "mime": "audio/mp4",
+      "bytes": 28228,
+      "credit": {
+        "title": "Encoded message",
+        "kind": "encoded-message",
+        "source": "CICI BIRD encoding engine (engine/birdsong_codec.py + voices.py)",
+        "license": "\u00a9 CICI \u2014 original synthesis, no third-party rights",
+        "verified": true
+      },
+      "speciesSlug": "house-sparrow",
+      "synthesis": {
+        "method": "parametric",
+        "engine": "engine/voices.py",
+        "decoder": "engine/birdsong_codec.py (fixed-grid FFT)"
+      },
+      "durationSec": 2.88,
+      "text": "good morning, neighbour.",
+      "normalizedText": "good morning, neighbour.",
+      "decodedText": "good morning, neighbour.",
+      "decodeAccuracy": 1.0,
+      "cues": {
+        "chars": [
+          {
+            "t0": 0.0,
+            "t1": 0.12,
+            "text": "g"
+          },
+          {
+            "t0": 0.12,
+            "t1": 0.24,
+            "text": "o"
+          },
+          {
+            "t0": 0.24,
+            "t1": 0.36,
+            "text": "o"
+          },
+          {
+            "t0": 0.36,
+            "t1": 0.48,
+            "text": "d"
+          },
+          {
+            "t0": 0.48,
+            "t1": 0.6,
+            "text": " "
+          },
+          {
+            "t0": 0.6,
+            "t1": 0.72,
+            "text": "m"
+          },
+          {
+            "t0": 0.72,
+            "t1": 0.84,
+            "text": "o"
+          },
+          {
+            "t0": 0.84,
+            "t1": 0.96,
+            "text": "r"
+          },
+          {
+            "t0": 0.96,
+            "t1": 1.08,
+            "text": "n"
+          },
+          {
+            "t0": 1.08,
+            "t1": 1.2,
+            "text": "i"
+          },
+          {
+            "t0": 1.2,
+            "t1": 1.32,
+            "text": "n"
+          },
+          {
+            "t0": 1.32,
+            "t1": 1.44,
+            "text": "g"
+          },
+          {
+            "t0": 1.44,
+            "t1": 1.56,
+            "text": ","
+          },
+          {
+            "t0": 1.56,
+            "t1": 1.68,
+            "text": " "
+          },
+          {
+            "t0": 1.68,
+            "t1": 1.8,
+            "text": "n"
+          },
+          {
+            "t0": 1.8,
+            "t1": 1.92,
+            "text": "e"
+          },
+          {
+            "t0": 1.92,
+            "t1": 2.04,
+            "text": "i"
+          },
+          {
+            "t0": 2.04,
+            "t1": 2.16,
+            "text": "g"
+          },
+          {
+            "t0": 2.16,
+            "t1": 2.28,
+            "text": "h"
+          },
+          {
+            "t0": 2.28,
+            "t1": 2.4,
+            "text": "b"
+          },
+          {
+            "t0": 2.4,
+            "t1": 2.52,
+            "text": "o"
+          },
+          {
+            "t0": 2.52,
+            "t1": 2.64,
+            "text": "u"
+          },
+          {
+            "t0": 2.64,
+            "t1": 2.76,
+            "text": "r"
+          },
+          {
+            "t0": 2.76,
+            "t1": 2.88,
+            "text": "."
+          }
+        ],
+        "words": [
+          {
+            "t0": 0.0,
+            "t1": 0.48,
+            "text": "good"
+          },
+          {
+            "t0": 0.6,
+            "t1": 1.56,
+            "text": "morning,"
+          },
+          {
+            "t0": 1.68,
+            "t1": 2.88,
+            "text": "neighbour."
+          }
+        ]
+      }
+    },
+    "sample-wood-pigeon": {
+      "id": "sample-wood-pigeon",
+      "src": "/audio/species/wood-pigeon-encoded.m4a",
+      "mime": "audio/mp4",
+      "bytes": 25387,
+      "credit": {
+        "title": "Encoded message",
+        "kind": "encoded-message",
+        "source": "CICI BIRD encoding engine (engine/birdsong_codec.py + voices.py)",
+        "license": "\u00a9 CICI \u2014 original synthesis, no third-party rights",
+        "verified": true
+      },
+      "speciesSlug": "wood-pigeon",
+      "synthesis": {
+        "method": "parametric",
+        "engine": "engine/voices.py",
+        "decoder": "engine/birdsong_codec.py (fixed-grid FFT)"
+      },
+      "durationSec": 2.64,
+      "text": "come home, it is late.",
+      "normalizedText": "come home, it is late.",
+      "decodedText": "come home, it is late.",
+      "decodeAccuracy": 1.0,
+      "cues": {
+        "chars": [
+          {
+            "t0": 0.0,
+            "t1": 0.12,
+            "text": "c"
+          },
+          {
+            "t0": 0.12,
+            "t1": 0.24,
+            "text": "o"
+          },
+          {
+            "t0": 0.24,
+            "t1": 0.36,
+            "text": "m"
+          },
+          {
+            "t0": 0.36,
+            "t1": 0.48,
+            "text": "e"
+          },
+          {
+            "t0": 0.48,
+            "t1": 0.6,
+            "text": " "
+          },
+          {
+            "t0": 0.6,
+            "t1": 0.72,
+            "text": "h"
+          },
+          {
+            "t0": 0.72,
+            "t1": 0.84,
+            "text": "o"
+          },
+          {
+            "t0": 0.84,
+            "t1": 0.96,
+            "text": "m"
+          },
+          {
+            "t0": 0.96,
+            "t1": 1.08,
+            "text": "e"
+          },
+          {
+            "t0": 1.08,
+            "t1": 1.2,
+            "text": ","
+          },
+          {
+            "t0": 1.2,
+            "t1": 1.32,
+            "text": " "
+          },
+          {
+            "t0": 1.32,
+            "t1": 1.44,
+            "text": "i"
+          },
+          {
+            "t0": 1.44,
+            "t1": 1.56,
+            "text": "t"
+          },
+          {
+            "t0": 1.56,
+            "t1": 1.68,
+            "text": " "
+          },
+          {
+            "t0": 1.68,
+            "t1": 1.8,
+            "text": "i"
+          },
+          {
+            "t0": 1.8,
+            "t1": 1.92,
+            "text": "s"
+          },
+          {
+            "t0": 1.92,
+            "t1": 2.04,
+            "text": " "
+          },
+          {
+            "t0": 2.04,
+            "t1": 2.16,
+            "text": "l"
+          },
+          {
+            "t0": 2.16,
+            "t1": 2.28,
+            "text": "a"
+          },
+          {
+            "t0": 2.28,
+            "t1": 2.4,
+            "text": "t"
+          },
+          {
+            "t0": 2.4,
+            "t1": 2.52,
+            "text": "e"
+          },
+          {
+            "t0": 2.52,
+            "t1": 2.64,
+            "text": "."
+          }
+        ],
+        "words": [
+          {
+            "t0": 0.0,
+            "t1": 0.48,
+            "text": "come"
+          },
+          {
+            "t0": 0.6,
+            "t1": 1.2,
+            "text": "home,"
+          },
+          {
+            "t0": 1.32,
+            "t1": 1.56,
+            "text": "it"
+          },
+          {
+            "t0": 1.68,
+            "t1": 1.92,
+            "text": "is"
+          },
+          {
+            "t0": 2.04,
+            "t1": 2.64,
+            "text": "late."
+          }
+        ]
+      }
+    },
+    "sample-carrion-crow": {
+      "id": "sample-carrion-crow",
+      "src": "/audio/species/carrion-crow-encoded.m4a",
+      "mime": "audio/mp4",
+      "bytes": 20688,
+      "credit": {
+        "title": "Encoded message",
+        "kind": "encoded-message",
+        "source": "CICI BIRD encoding engine (engine/birdsong_codec.py + voices.py)",
+        "license": "\u00a9 CICI \u2014 original synthesis, no third-party rights",
+        "verified": true
+      },
+      "speciesSlug": "carrion-crow",
+      "synthesis": {
+        "method": "parametric",
+        "engine": "engine/voices.py",
+        "decoder": "engine/birdsong_codec.py (fixed-grid FFT)"
+      },
+      "durationSec": 2.04,
+      "text": "i saw everything.",
+      "normalizedText": "i saw everything.",
+      "decodedText": "i saw everything.",
+      "decodeAccuracy": 1.0,
+      "cues": {
+        "chars": [
+          {
+            "t0": 0.0,
+            "t1": 0.12,
+            "text": "i"
+          },
+          {
+            "t0": 0.12,
+            "t1": 0.24,
+            "text": " "
+          },
+          {
+            "t0": 0.24,
+            "t1": 0.36,
+            "text": "s"
+          },
+          {
+            "t0": 0.36,
+            "t1": 0.48,
+            "text": "a"
+          },
+          {
+            "t0": 0.48,
+            "t1": 0.6,
+            "text": "w"
+          },
+          {
+            "t0": 0.6,
+            "t1": 0.72,
+            "text": " "
+          },
+          {
+            "t0": 0.72,
+            "t1": 0.84,
+            "text": "e"
+          },
+          {
+            "t0": 0.84,
+            "t1": 0.96,
+            "text": "v"
+          },
+          {
+            "t0": 0.96,
+            "t1": 1.08,
+            "text": "e"
+          },
+          {
+            "t0": 1.08,
+            "t1": 1.2,
+            "text": "r"
+          },
+          {
+            "t0": 1.2,
+            "t1": 1.32,
+            "text": "y"
+          },
+          {
+            "t0": 1.32,
+            "t1": 1.44,
+            "text": "t"
+          },
+          {
+            "t0": 1.44,
+            "t1": 1.56,
+            "text": "h"
+          },
+          {
+            "t0": 1.56,
+            "t1": 1.68,
+            "text": "i"
+          },
+          {
+            "t0": 1.68,
+            "t1": 1.8,
+            "text": "n"
+          },
+          {
+            "t0": 1.8,
+            "t1": 1.92,
+            "text": "g"
+          },
+          {
+            "t0": 1.92,
+            "t1": 2.04,
+            "text": "."
+          }
+        ],
+        "words": [
+          {
+            "t0": 0.0,
+            "t1": 0.12,
+            "text": "i"
+          },
+          {
+            "t0": 0.24,
+            "t1": 0.6,
+            "text": "saw"
+          },
+          {
+            "t0": 0.72,
+            "t1": 2.04,
+            "text": "everything."
+          }
+        ]
+      }
+    },
+    "sample-barn-swallow": {
+      "id": "sample-barn-swallow",
+      "src": "/audio/species/barn-swallow-encoded.m4a",
+      "mime": "audio/mp4",
+      "bytes": 25686,
+      "credit": {
+        "title": "Encoded message",
+        "kind": "encoded-message",
+        "source": "CICI BIRD encoding engine (engine/birdsong_codec.py + voices.py)",
+        "license": "\u00a9 CICI \u2014 original synthesis, no third-party rights",
+        "verified": true
+      },
+      "speciesSlug": "barn-swallow",
+      "synthesis": {
+        "method": "parametric",
+        "engine": "engine/voices.py",
+        "decoder": "engine/birdsong_codec.py (fixed-grid FFT)"
+      },
+      "durationSec": 2.52,
+      "text": "summer is here again.",
+      "normalizedText": "summer is here again.",
+      "decodedText": "summer is here again.",
+      "decodeAccuracy": 1.0,
+      "cues": {
+        "chars": [
+          {
+            "t0": 0.0,
+            "t1": 0.12,
+            "text": "s"
+          },
+          {
+            "t0": 0.12,
+            "t1": 0.24,
+            "text": "u"
+          },
+          {
+            "t0": 0.24,
+            "t1": 0.36,
+            "text": "m"
+          },
+          {
+            "t0": 0.36,
+            "t1": 0.48,
+            "text": "m"
+          },
+          {
+            "t0": 0.48,
+            "t1": 0.6,
+            "text": "e"
+          },
+          {
+            "t0": 0.6,
+            "t1": 0.72,
+            "text": "r"
+          },
+          {
+            "t0": 0.72,
+            "t1": 0.84,
+            "text": " "
+          },
+          {
+            "t0": 0.84,
+            "t1": 0.96,
+            "text": "i"
+          },
+          {
+            "t0": 0.96,
+            "t1": 1.08,
+            "text": "s"
+          },
+          {
+            "t0": 1.08,
+            "t1": 1.2,
+            "text": " "
+          },
+          {
+            "t0": 1.2,
+            "t1": 1.32,
+            "text": "h"
+          },
+          {
+            "t0": 1.32,
+            "t1": 1.44,
+            "text": "e"
+          },
+          {
+            "t0": 1.44,
+            "t1": 1.56,
+            "text": "r"
+          },
+          {
+            "t0": 1.56,
+            "t1": 1.68,
+            "text": "e"
+          },
+          {
+            "t0": 1.68,
+            "t1": 1.8,
+            "text": " "
+          },
+          {
+            "t0": 1.8,
+            "t1": 1.92,
+            "text": "a"
+          },
+          {
+            "t0": 1.92,
+            "t1": 2.04,
+            "text": "g"
+          },
+          {
+            "t0": 2.04,
+            "t1": 2.16,
+            "text": "a"
+          },
+          {
+            "t0": 2.16,
+            "t1": 2.28,
+            "text": "i"
+          },
+          {
+            "t0": 2.28,
+            "t1": 2.4,
+            "text": "n"
+          },
+          {
+            "t0": 2.4,
+            "t1": 2.52,
+            "text": "."
+          }
+        ],
+        "words": [
+          {
+            "t0": 0.0,
+            "t1": 0.72,
+            "text": "summer"
+          },
+          {
+            "t0": 0.84,
+            "t1": 1.08,
+            "text": "is"
+          },
+          {
+            "t0": 1.2,
+            "t1": 1.68,
+            "text": "here"
+          },
+          {
+            "t0": 1.8,
+            "t1": 2.52,
+            "text": "again."
+          }
+        ]
+      }
+    },
+    "sample-blackbird": {
+      "id": "sample-blackbird",
+      "src": "/audio/species/blackbird-encoded.m4a",
+      "mime": "audio/mp4",
+      "bytes": 17347,
+      "credit": {
+        "title": "Encoded message",
+        "kind": "encoded-message",
+        "source": "CICI BIRD encoding engine (engine/birdsong_codec.py + voices.py)",
+        "license": "\u00a9 CICI \u2014 original synthesis, no third-party rights",
+        "verified": true
+      },
+      "speciesSlug": "blackbird",
+      "synthesis": {
+        "method": "parametric",
+        "engine": "engine/voices.py",
+        "decoder": "engine/birdsong_codec.py (fixed-grid FFT)"
+      },
+      "durationSec": 1.92,
+      "text": "sing back to me.",
+      "normalizedText": "sing back to me.",
+      "decodedText": "sing back to me.",
+      "decodeAccuracy": 1.0,
+      "cues": {
+        "chars": [
+          {
+            "t0": 0.0,
+            "t1": 0.12,
+            "text": "s"
+          },
+          {
+            "t0": 0.12,
+            "t1": 0.24,
+            "text": "i"
+          },
+          {
+            "t0": 0.24,
+            "t1": 0.36,
+            "text": "n"
+          },
+          {
+            "t0": 0.36,
+            "t1": 0.48,
+            "text": "g"
+          },
+          {
+            "t0": 0.48,
+            "t1": 0.6,
+            "text": " "
+          },
+          {
+            "t0": 0.6,
+            "t1": 0.72,
+            "text": "b"
+          },
+          {
+            "t0": 0.72,
+            "t1": 0.84,
+            "text": "a"
+          },
+          {
+            "t0": 0.84,
+            "t1": 0.96,
+            "text": "c"
+          },
+          {
+            "t0": 0.96,
+            "t1": 1.08,
+            "text": "k"
+          },
+          {
+            "t0": 1.08,
+            "t1": 1.2,
+            "text": " "
+          },
+          {
+            "t0": 1.2,
+            "t1": 1.32,
+            "text": "t"
+          },
+          {
+            "t0": 1.32,
+            "t1": 1.44,
+            "text": "o"
+          },
+          {
+            "t0": 1.44,
+            "t1": 1.56,
+            "text": " "
+          },
+          {
+            "t0": 1.56,
+            "t1": 1.68,
+            "text": "m"
+          },
+          {
+            "t0": 1.68,
+            "t1": 1.8,
+            "text": "e"
+          },
+          {
+            "t0": 1.8,
+            "t1": 1.92,
+            "text": "."
+          }
+        ],
+        "words": [
+          {
+            "t0": 0.0,
+            "t1": 0.48,
+            "text": "sing"
+          },
+          {
+            "t0": 0.6,
+            "t1": 1.08,
+            "text": "back"
+          },
+          {
+            "t0": 1.2,
+            "t1": 1.44,
+            "text": "to"
+          },
+          {
+            "t0": 1.56,
+            "t1": 1.92,
+            "text": "me."
+          }
+        ]
+      }
+    },
+    "sample-bewicks-wren": {
+      "id": "sample-bewicks-wren",
+      "src": "/audio/species/bewicks-wren-encoded.m4a",
+      "mime": "audio/mp4",
+      "bytes": 41256,
+      "credit": {
+        "title": "Encoded message, trained wren voice",
+        "kind": "encoded-message",
+        "source": "CICI BIRD DDSP model ml/checkpoints/wren.pt, trained on the Bewick's wren corpus in data/bewicks_wren",
+        "license": "Model output, but built on non-commercially licensed recordings",
+        "verified": false,
+        "note": "The audio is the model's own output, but its note motifs are real note shapes lifted out of the training recordings, and ALL 250 clips in that selection are licensed non-commercially (CC BY-NC-SA), 44 of them NoDerivatives. Unlike the sparrow there is no permissive subset to fall back on: the whole 893-clip Bewick's wren corpus contains only 11 CC BY-SA clips. TODO before launch: obtain commercial permission from the recordists whose notes are actually borrowed, or source new recordings."
+      },
+      "speciesSlug": "bewicks-wren",
+      "synthesis": {
+        "method": "neural-ddsp",
+        "engine": "ml/generate.py",
+        "model": "ml/checkpoints/wren.pt",
+        "trainedOn": "250 ranked clips from 51 Bewick's wren recordings (data/bewicks_wren, ml/selections/wren_best250.json)",
+        "decoder": "ml/generate.py (motif templates + Viterbi alignment)"
+      },
+      "durationSec": 4.537,
+      "text": "found you in the thicket.",
+      "normalizedText": "found you in the thicket.",
+      "decodedText": "found you in the thicket.",
+      "decodeAccuracy": 1.0,
+      "cues": {
+        "chars": [
+          {
+            "t0": 0.0,
+            "t1": 0.2148,
+            "text": "f"
+          },
+          {
+            "t0": 0.2496,
+            "t1": 0.5166,
+            "text": "o"
+          },
+          {
+            "t0": 0.566,
+            "t1": 0.6966,
+            "text": "u"
+          },
+          {
+            "t0": 0.7343,
+            "t1": 0.9056,
+            "text": "n"
+          },
+          {
+            "t0": 0.9549,
+            "t1": 1.0275,
+            "text": "d"
+          },
+          {
+            "t0": 1.0275,
+            "t1": 1.1784,
+            "text": " "
+          },
+          {
+            "t0": 1.1784,
+            "t1": 1.3642,
+            "text": "y"
+          },
+          {
+            "t0": 1.4135,
+            "t1": 1.6805,
+            "text": "o"
+          },
+          {
+            "t0": 1.7212,
+            "t1": 1.8518,
+            "text": "u"
+          },
+          {
+            "t0": 1.8518,
+            "t1": 1.9737,
+            "text": " "
+          },
+          {
+            "t0": 1.9737,
+            "t1": 2.0753,
+            "text": "i"
+          },
+          {
+            "t0": 2.1188,
+            "t1": 2.2901,
+            "text": "n"
+          },
+          {
+            "t0": 2.2901,
+            "t1": 2.4613,
+            "text": " "
+          },
+          {
+            "t0": 2.4613,
+            "t1": 2.5803,
+            "text": "t"
+          },
+          {
+            "t0": 2.6093,
+            "t1": 2.7458,
+            "text": "h"
+          },
+          {
+            "t0": 2.7748,
+            "t1": 2.9605,
+            "text": "e"
+          },
+          {
+            "t0": 2.9605,
+            "t1": 3.155,
+            "text": " "
+          },
+          {
+            "t0": 3.155,
+            "t1": 3.274,
+            "text": "t"
+          },
+          {
+            "t0": 3.3176,
+            "t1": 3.454,
+            "text": "h"
+          },
+          {
+            "t0": 3.4917,
+            "t1": 3.5933,
+            "text": "i"
+          },
+          {
+            "t0": 3.6165,
+            "t1": 3.8516,
+            "text": "c"
+          },
+          {
+            "t0": 3.8748,
+            "t1": 4.0025,
+            "text": "k"
+          },
+          {
+            "t0": 4.0316,
+            "t1": 4.2173,
+            "text": "e"
+          },
+          {
+            "t0": 4.2638,
+            "t1": 4.3828,
+            "text": "t"
+          },
+          {
+            "t0": 4.435,
+            "t1": 4.5366,
+            "text": "."
+          }
+        ],
+        "words": [
+          {
+            "t0": 0.0,
+            "t1": 1.0275,
+            "text": "found"
+          },
+          {
+            "t0": 1.1784,
+            "t1": 1.8518,
+            "text": "you"
+          },
+          {
+            "t0": 1.9737,
+            "t1": 2.2901,
+            "text": "in"
+          },
+          {
+            "t0": 2.4613,
+            "t1": 2.9605,
+            "text": "the"
+          },
+          {
+            "t0": 3.155,
+            "t1": 4.5366,
+            "text": "thicket."
+          }
+        ]
+      }
+    },
+    "sample-song-sparrow": {
+      "id": "sample-song-sparrow",
+      "src": "/audio/species/song-sparrow-encoded.m4a",
+      "mime": "audio/mp4",
+      "bytes": 47589,
+      "credit": {
+        "title": "Encoded message, trained song sparrow voice",
+        "kind": "encoded-message",
+        "source": "CICI BIRD DDSP model ml/checkpoints/sparrow_win256.pt, trained on 250 clips from 114 recordings in data/song_sparrow",
+        "license": "UNCONFIRMED \u2014 see note",
+        "verified": false,
+        "note": "The audio is the model's own output, but its note motifs are real note shapes lifted out of the training recordings, and 1192 of the 1256 clips in that corpus are licensed non-commercially (CC BY-NC-SA or BY-NC-ND); some are NoDerivatives. TODO before launch: either retrain and rebuild the motif bank from the 64 CC BY-SA clips only, or obtain commercial permission from the recordists whose notes are actually borrowed."
+      },
+      "speciesSlug": "song-sparrow",
+      "synthesis": {
+        "method": "neural-ddsp",
+        "engine": "ml/generate_species.py",
+        "model": "ml/checkpoints/sparrow_win256.pt",
+        "trainedOn": "250 clips from 114 song sparrow recordings (data/song_sparrow)",
+        "decoder": "ml/generate_species.py (motif templates + Viterbi alignment)"
+      },
+      "durationSec": 5.338,
+      "text": "meet me by the river at six.",
+      "normalizedText": "meet me by the river at six.",
+      "decodedText": "meet me by the river at six.",
+      "decodeAccuracy": 1.0,
+      "cues": {
+        "chars": [
+          {
+            "t0": 0.0,
+            "t1": 0.1248,
+            "text": "m"
+          },
+          {
+            "t0": 0.1741,
+            "t1": 0.2786,
+            "text": "e"
+          },
+          {
+            "t0": 0.3454,
+            "t1": 0.4499,
+            "text": "e"
+          },
+          {
+            "t0": 0.4992,
+            "t1": 0.6531,
+            "text": "t"
+          },
+          {
+            "t0": 0.6531,
+            "t1": 0.8214,
+            "text": " "
+          },
+          {
+            "t0": 0.8214,
+            "t1": 0.9462,
+            "text": "m"
+          },
+          {
+            "t0": 1.013,
+            "t1": 1.1175,
+            "text": "e"
+          },
+          {
+            "t0": 1.1175,
+            "t1": 1.2597,
+            "text": " "
+          },
+          {
+            "t0": 1.2597,
+            "t1": 1.4832,
+            "text": "b"
+          },
+          {
+            "t0": 1.5412,
+            "t1": 1.7009,
+            "text": "y"
+          },
+          {
+            "t0": 1.7009,
+            "t1": 1.8895,
+            "text": " "
+          },
+          {
+            "t0": 1.8895,
+            "t1": 2.0434,
+            "text": "t"
+          },
+          {
+            "t0": 2.084,
+            "t1": 2.1798,
+            "text": "h"
+          },
+          {
+            "t0": 2.2204,
+            "t1": 2.3249,
+            "text": "e"
+          },
+          {
+            "t0": 2.3249,
+            "t1": 2.5397,
+            "text": " "
+          },
+          {
+            "t0": 2.5397,
+            "t1": 2.8619,
+            "text": "r"
+          },
+          {
+            "t0": 2.9228,
+            "t1": 3.0099,
+            "text": "i"
+          },
+          {
+            "t0": 3.0621,
+            "t1": 3.3901,
+            "text": "v"
+          },
+          {
+            "t0": 3.422,
+            "t1": 3.5265,
+            "text": "e"
+          },
+          {
+            "t0": 3.5585,
+            "t1": 3.8806,
+            "text": "r"
+          },
+          {
+            "t0": 3.8806,
+            "t1": 4.0054,
+            "text": " "
+          },
+          {
+            "t0": 4.0054,
+            "t1": 4.1302,
+            "text": "a"
+          },
+          {
+            "t0": 4.1651,
+            "t1": 4.3189,
+            "text": "t"
+          },
+          {
+            "t0": 4.3189,
+            "t1": 4.5337,
+            "text": " "
+          },
+          {
+            "t0": 4.5337,
+            "t1": 4.6614,
+            "text": "s"
+          },
+          {
+            "t0": 4.7282,
+            "t1": 4.8152,
+            "text": "i"
+          },
+          {
+            "t0": 4.8849,
+            "t1": 5.0213,
+            "text": "x"
+          },
+          {
+            "t0": 5.0765,
+            "t1": 5.3377,
+            "text": "."
+          }
+        ],
+        "words": [
+          {
+            "t0": 0.0,
+            "t1": 0.6531,
+            "text": "meet"
+          },
+          {
+            "t0": 0.8214,
+            "t1": 1.1175,
+            "text": "me"
+          },
+          {
+            "t0": 1.2597,
+            "t1": 1.7009,
+            "text": "by"
+          },
+          {
+            "t0": 1.8895,
+            "t1": 2.3249,
+            "text": "the"
+          },
+          {
+            "t0": 2.5397,
+            "t1": 3.8806,
+            "text": "river"
+          },
+          {
+            "t0": 4.0054,
+            "t1": 4.3189,
+            "text": "at"
+          },
+          {
+            "t0": 4.5337,
+            "t1": 5.3377,
+            "text": "six."
+          }
+        ]
+      }
+    },
+    "sample-northern-cardinal": {
+      "id": "sample-northern-cardinal",
+      "src": "/audio/species/northern-cardinal-encoded.m4a",
+      "mime": "audio/mp4",
+      "bytes": 40555,
+      "credit": {
+        "title": "Encoded message, trained northern cardinal voice",
+        "kind": "encoded-message",
+        "source": "CICI BIRD DDSP model ml/checkpoints/cardinal_best250.pt, trained on 250 clips from 47 recordings in data/northern_cardinal",
+        "license": "UNCONFIRMED \u2014 see note",
+        "verified": false,
+        "note": "The audio is the model's own output, but its note motifs are real note shapes lifted out of the training recordings, and 243 of the 250 selected clips are licensed non-commercially (176 CC BY-NC-SA, 67 BY-NC-ND); only 7 are CC BY-SA. The whole 1074-clip corpus holds just 24 permissive clips, from 2 recordings. TODO before launch: either retrain and rebuild the motif bank from those 24 only \u2014 which is far below the 250 this voice was measured at \u2014 or obtain commercial permission from the recordists whose notes are borrowed."
+      },
+      "speciesSlug": "northern-cardinal",
+      "synthesis": {
+        "method": "neural-ddsp",
+        "engine": "ml/generate_species.py",
+        "model": "ml/checkpoints/cardinal_best250.pt",
+        "trainedOn": "250 ranked clips from 47 northern cardinal recordings (data/northern_cardinal, ml/selections/cardinal_best250.json)",
+        "decoder": "ml/generate_species.py (motif templates + Viterbi alignment)"
+      },
+      "durationSec": 4.499,
+      "text": "the mornings are yours now.",
+      "normalizedText": "the mornings are yours now.",
+      "decodedText": "the mornings are yours now.",
+      "decodeAccuracy": 1.0,
+      "cues": {
+        "chars": [
+          {
+            "t0": 0.0,
+            "t1": 0.119,
+            "text": "t"
+          },
+          {
+            "t0": 0.1567,
+            "t1": 0.3338,
+            "text": "h"
+          },
+          {
+            "t0": 0.386,
+            "t1": 0.537,
+            "text": "e"
+          },
+          {
+            "t0": 0.537,
+            "t1": 0.7053,
+            "text": " "
+          },
+          {
+            "t0": 0.7053,
+            "t1": 0.833,
+            "text": "m"
+          },
+          {
+            "t0": 0.8882,
+            "t1": 1.0246,
+            "text": "o"
+          },
+          {
+            "t0": 1.0652,
+            "t1": 1.1523,
+            "text": "r"
+          },
+          {
+            "t0": 1.1755,
+            "t1": 1.3351,
+            "text": "n"
+          },
+          {
+            "t0": 1.3787,
+            "t1": 1.5732,
+            "text": "i"
+          },
+          {
+            "t0": 1.6022,
+            "t1": 1.7618,
+            "text": "n"
+          },
+          {
+            "t0": 1.7966,
+            "t1": 1.8895,
+            "text": "g"
+          },
+          {
+            "t0": 1.9273,
+            "t1": 2.0869,
+            "text": "s"
+          },
+          {
+            "t0": 2.0869,
+            "t1": 2.2291,
+            "text": " "
+          },
+          {
+            "t0": 2.2291,
+            "t1": 2.3133,
+            "text": "a"
+          },
+          {
+            "t0": 2.3597,
+            "t1": 2.4468,
+            "text": "r"
+          },
+          {
+            "t0": 2.47,
+            "t1": 2.621,
+            "text": "e"
+          },
+          {
+            "t0": 2.621,
+            "t1": 2.8096,
+            "text": " "
+          },
+          {
+            "t0": 2.8096,
+            "t1": 2.9722,
+            "text": "y"
+          },
+          {
+            "t0": 3.0041,
+            "t1": 3.1405,
+            "text": "o"
+          },
+          {
+            "t0": 3.1724,
+            "t1": 3.3001,
+            "text": "u"
+          },
+          {
+            "t0": 3.3205,
+            "t1": 3.4075,
+            "text": "r"
+          },
+          {
+            "t0": 3.4424,
+            "t1": 3.602,
+            "text": "s"
+          },
+          {
+            "t0": 3.602,
+            "t1": 3.8168,
+            "text": " "
+          },
+          {
+            "t0": 3.8168,
+            "t1": 3.9764,
+            "text": "n"
+          },
+          {
+            "t0": 4.0229,
+            "t1": 4.1593,
+            "text": "o"
+          },
+          {
+            "t0": 4.1999,
+            "t1": 4.3537,
+            "text": "w"
+          },
+          {
+            "t0": 4.377,
+            "t1": 4.4989,
+            "text": "."
+          }
+        ],
+        "words": [
+          {
+            "t0": 0.0,
+            "t1": 0.537,
+            "text": "the"
+          },
+          {
+            "t0": 0.7053,
+            "t1": 2.0869,
+            "text": "mornings"
+          },
+          {
+            "t0": 2.2291,
+            "t1": 2.621,
+            "text": "are"
+          },
+          {
+            "t0": 2.8096,
+            "t1": 3.602,
+            "text": "yours"
+          },
+          {
+            "t0": 3.8168,
+            "t1": 4.4989,
+            "text": "now."
+          }
+        ]
+      }
+    },
+    "sample-nightingale": {
+      "id": "sample-nightingale",
+      "src": "/audio/species/nightingale-encoded.m4a",
+      "mime": "audio/mp4",
+      "bytes": 20248,
+      "credit": {
+        "title": "Encoded message",
+        "kind": "encoded-message",
+        "source": "CICI BIRD encoding engine (engine/birdsong_codec.py + voices.py)",
+        "license": "\u00a9 CICI \u2014 original synthesis, no third-party rights",
+        "verified": true
+      },
+      "speciesSlug": "nightingale",
+      "synthesis": {
+        "method": "parametric",
+        "engine": "engine/voices.py",
+        "decoder": "engine/birdsong_codec.py (fixed-grid FFT)"
+      },
+      "durationSec": 2.64,
+      "text": "i waited up all night.",
+      "normalizedText": "i waited up all night.",
+      "decodedText": "i waited up all night.",
+      "decodeAccuracy": 1.0,
+      "cues": {
+        "chars": [
+          {
+            "t0": 0.0,
+            "t1": 0.12,
+            "text": "i"
+          },
+          {
+            "t0": 0.12,
+            "t1": 0.24,
+            "text": " "
+          },
+          {
+            "t0": 0.24,
+            "t1": 0.36,
+            "text": "w"
+          },
+          {
+            "t0": 0.36,
+            "t1": 0.48,
+            "text": "a"
+          },
+          {
+            "t0": 0.48,
+            "t1": 0.6,
+            "text": "i"
+          },
+          {
+            "t0": 0.6,
+            "t1": 0.72,
+            "text": "t"
+          },
+          {
+            "t0": 0.72,
+            "t1": 0.84,
+            "text": "e"
+          },
+          {
+            "t0": 0.84,
+            "t1": 0.96,
+            "text": "d"
+          },
+          {
+            "t0": 0.96,
+            "t1": 1.08,
+            "text": " "
+          },
+          {
+            "t0": 1.08,
+            "t1": 1.2,
+            "text": "u"
+          },
+          {
+            "t0": 1.2,
+            "t1": 1.32,
+            "text": "p"
+          },
+          {
+            "t0": 1.32,
+            "t1": 1.44,
+            "text": " "
+          },
+          {
+            "t0": 1.44,
+            "t1": 1.56,
+            "text": "a"
+          },
+          {
+            "t0": 1.56,
+            "t1": 1.68,
+            "text": "l"
+          },
+          {
+            "t0": 1.68,
+            "t1": 1.8,
+            "text": "l"
+          },
+          {
+            "t0": 1.8,
+            "t1": 1.92,
+            "text": " "
+          },
+          {
+            "t0": 1.92,
+            "t1": 2.04,
+            "text": "n"
+          },
+          {
+            "t0": 2.04,
+            "t1": 2.16,
+            "text": "i"
+          },
+          {
+            "t0": 2.16,
+            "t1": 2.28,
+            "text": "g"
+          },
+          {
+            "t0": 2.28,
+            "t1": 2.4,
+            "text": "h"
+          },
+          {
+            "t0": 2.4,
+            "t1": 2.52,
+            "text": "t"
+          },
+          {
+            "t0": 2.52,
+            "t1": 2.64,
+            "text": "."
+          }
+        ],
+        "words": [
+          {
+            "t0": 0.0,
+            "t1": 0.12,
+            "text": "i"
+          },
+          {
+            "t0": 0.24,
+            "t1": 0.96,
+            "text": "waited"
+          },
+          {
+            "t0": 1.08,
+            "t1": 1.32,
+            "text": "up"
+          },
+          {
+            "t0": 1.44,
+            "t1": 1.8,
+            "text": "all"
+          },
+          {
+            "t0": 1.92,
+            "t1": 2.64,
+            "text": "night."
+          }
+        ]
+      }
+    },
+    "sample-hoopoe": {
+      "id": "sample-hoopoe",
+      "src": "/audio/species/hoopoe-encoded.m4a",
+      "mime": "audio/mp4",
+      "bytes": 17738,
+      "credit": {
+        "title": "Encoded message",
+        "kind": "encoded-message",
+        "source": "CICI BIRD encoding engine (engine/birdsong_codec.py + voices.py)",
+        "license": "\u00a9 CICI \u2014 original synthesis, no third-party rights",
+        "verified": true
+      },
+      "speciesSlug": "hoopoe",
+      "synthesis": {
+        "method": "parametric",
+        "engine": "engine/voices.py",
+        "decoder": "engine/birdsong_codec.py (fixed-grid FFT)"
+      },
+      "durationSec": 2.28,
+      "text": "i am far from home.",
+      "normalizedText": "i am far from home.",
+      "decodedText": "i am far from home.",
+      "decodeAccuracy": 1.0,
+      "cues": {
+        "chars": [
+          {
+            "t0": 0.0,
+            "t1": 0.12,
+            "text": "i"
+          },
+          {
+            "t0": 0.12,
+            "t1": 0.24,
+            "text": " "
+          },
+          {
+            "t0": 0.24,
+            "t1": 0.36,
+            "text": "a"
+          },
+          {
+            "t0": 0.36,
+            "t1": 0.48,
+            "text": "m"
+          },
+          {
+            "t0": 0.48,
+            "t1": 0.6,
+            "text": " "
+          },
+          {
+            "t0": 0.6,
+            "t1": 0.72,
+            "text": "f"
+          },
+          {
+            "t0": 0.72,
+            "t1": 0.84,
+            "text": "a"
+          },
+          {
+            "t0": 0.84,
+            "t1": 0.96,
+            "text": "r"
+          },
+          {
+            "t0": 0.96,
+            "t1": 1.08,
+            "text": " "
+          },
+          {
+            "t0": 1.08,
+            "t1": 1.2,
+            "text": "f"
+          },
+          {
+            "t0": 1.2,
+            "t1": 1.32,
+            "text": "r"
+          },
+          {
+            "t0": 1.32,
+            "t1": 1.44,
+            "text": "o"
+          },
+          {
+            "t0": 1.44,
+            "t1": 1.56,
+            "text": "m"
+          },
+          {
+            "t0": 1.56,
+            "t1": 1.68,
+            "text": " "
+          },
+          {
+            "t0": 1.68,
+            "t1": 1.8,
+            "text": "h"
+          },
+          {
+            "t0": 1.8,
+            "t1": 1.92,
+            "text": "o"
+          },
+          {
+            "t0": 1.92,
+            "t1": 2.04,
+            "text": "m"
+          },
+          {
+            "t0": 2.04,
+            "t1": 2.16,
+            "text": "e"
+          },
+          {
+            "t0": 2.16,
+            "t1": 2.28,
+            "text": "."
+          }
+        ],
+        "words": [
+          {
+            "t0": 0.0,
+            "t1": 0.12,
+            "text": "i"
+          },
+          {
+            "t0": 0.24,
+            "t1": 0.48,
+            "text": "am"
+          },
+          {
+            "t0": 0.6,
+            "t1": 0.96,
+            "text": "far"
+          },
+          {
+            "t0": 1.08,
+            "t1": 1.56,
+            "text": "from"
+          },
+          {
+            "t0": 1.68,
+            "t1": 2.28,
+            "text": "home."
+          }
+        ]
+      }
+    },
+    "msg-nightingale": {
+      "id": "msg-nightingale",
+      "src": "/audio/messages/msg-nightingale.m4a",
+      "mime": "audio/mp4",
+      "bytes": 25703,
+      "credit": {
+        "title": "Encoded message",
+        "kind": "encoded-message",
+        "source": "CICI BIRD encoding engine (engine/birdsong_codec.py + voices.py)",
+        "license": "\u00a9 CICI \u2014 original synthesis, no third-party rights",
+        "verified": true
+      },
+      "speciesSlug": "nightingale",
+      "synthesis": {
+        "method": "parametric",
+        "engine": "engine/voices.py",
+        "decoder": "engine/birdsong_codec.py (fixed-grid FFT)"
+      },
+      "durationSec": 3.36,
+      "text": "meet me by the river at six.",
+      "normalizedText": "meet me by the river at six.",
+      "decodedText": "meet me by the river at six.",
+      "decodeAccuracy": 1.0,
+      "cues": {
+        "chars": [
+          {
+            "t0": 0.0,
+            "t1": 0.12,
+            "text": "m"
+          },
+          {
+            "t0": 0.12,
+            "t1": 0.24,
+            "text": "e"
+          },
+          {
+            "t0": 0.24,
+            "t1": 0.36,
+            "text": "e"
+          },
+          {
+            "t0": 0.36,
+            "t1": 0.48,
+            "text": "t"
+          },
+          {
+            "t0": 0.48,
+            "t1": 0.6,
+            "text": " "
+          },
+          {
+            "t0": 0.6,
+            "t1": 0.72,
+            "text": "m"
+          },
+          {
+            "t0": 0.72,
+            "t1": 0.84,
+            "text": "e"
+          },
+          {
+            "t0": 0.84,
+            "t1": 0.96,
+            "text": " "
+          },
+          {
+            "t0": 0.96,
+            "t1": 1.08,
+            "text": "b"
+          },
+          {
+            "t0": 1.08,
+            "t1": 1.2,
+            "text": "y"
+          },
+          {
+            "t0": 1.2,
+            "t1": 1.32,
+            "text": " "
+          },
+          {
+            "t0": 1.32,
+            "t1": 1.44,
+            "text": "t"
+          },
+          {
+            "t0": 1.44,
+            "t1": 1.56,
+            "text": "h"
+          },
+          {
+            "t0": 1.56,
+            "t1": 1.68,
+            "text": "e"
+          },
+          {
+            "t0": 1.68,
+            "t1": 1.8,
+            "text": " "
+          },
+          {
+            "t0": 1.8,
+            "t1": 1.92,
+            "text": "r"
+          },
+          {
+            "t0": 1.92,
+            "t1": 2.04,
+            "text": "i"
+          },
+          {
+            "t0": 2.04,
+            "t1": 2.16,
+            "text": "v"
+          },
+          {
+            "t0": 2.16,
+            "t1": 2.28,
+            "text": "e"
+          },
+          {
+            "t0": 2.28,
+            "t1": 2.4,
+            "text": "r"
+          },
+          {
+            "t0": 2.4,
+            "t1": 2.52,
+            "text": " "
+          },
+          {
+            "t0": 2.52,
+            "t1": 2.64,
+            "text": "a"
+          },
+          {
+            "t0": 2.64,
+            "t1": 2.76,
+            "text": "t"
+          },
+          {
+            "t0": 2.76,
+            "t1": 2.88,
+            "text": " "
+          },
+          {
+            "t0": 2.88,
+            "t1": 3.0,
+            "text": "s"
+          },
+          {
+            "t0": 3.0,
+            "t1": 3.12,
+            "text": "i"
+          },
+          {
+            "t0": 3.12,
+            "t1": 3.24,
+            "text": "x"
+          },
+          {
+            "t0": 3.24,
+            "t1": 3.36,
+            "text": "."
+          }
+        ],
+        "words": [
+          {
+            "t0": 0.0,
+            "t1": 0.48,
+            "text": "meet"
+          },
+          {
+            "t0": 0.6,
+            "t1": 0.84,
+            "text": "me"
+          },
+          {
+            "t0": 0.96,
+            "t1": 1.2,
+            "text": "by"
+          },
+          {
+            "t0": 1.32,
+            "t1": 1.68,
+            "text": "the"
+          },
+          {
+            "t0": 1.8,
+            "t1": 2.4,
+            "text": "river"
+          },
+          {
+            "t0": 2.52,
+            "t1": 2.76,
+            "text": "at"
+          },
+          {
+            "t0": 2.88,
+            "t1": 3.36,
+            "text": "six."
+          }
+        ]
+      }
+    },
+    "msg-blackbird": {
+      "id": "msg-blackbird",
+      "src": "/audio/messages/msg-blackbird.m4a",
+      "mime": "audio/mp4",
+      "bytes": 21637,
+      "credit": {
+        "title": "Encoded message",
+        "kind": "encoded-message",
+        "source": "CICI BIRD encoding engine (engine/birdsong_codec.py + voices.py)",
+        "license": "\u00a9 CICI \u2014 original synthesis, no third-party rights",
+        "verified": true
+      },
+      "speciesSlug": "blackbird",
+      "synthesis": {
+        "method": "parametric",
+        "engine": "engine/voices.py",
+        "decoder": "engine/birdsong_codec.py (fixed-grid FFT)"
+      },
+      "durationSec": 2.64,
+      "text": "i am outside, look up.",
+      "normalizedText": "i am outside, look up.",
+      "decodedText": "i am outside, look up.",
+      "decodeAccuracy": 1.0,
+      "cues": {
+        "chars": [
+          {
+            "t0": 0.0,
+            "t1": 0.12,
+            "text": "i"
+          },
+          {
+            "t0": 0.12,
+            "t1": 0.24,
+            "text": " "
+          },
+          {
+            "t0": 0.24,
+            "t1": 0.36,
+            "text": "a"
+          },
+          {
+            "t0": 0.36,
+            "t1": 0.48,
+            "text": "m"
+          },
+          {
+            "t0": 0.48,
+            "t1": 0.6,
+            "text": " "
+          },
+          {
+            "t0": 0.6,
+            "t1": 0.72,
+            "text": "o"
+          },
+          {
+            "t0": 0.72,
+            "t1": 0.84,
+            "text": "u"
+          },
+          {
+            "t0": 0.84,
+            "t1": 0.96,
+            "text": "t"
+          },
+          {
+            "t0": 0.96,
+            "t1": 1.08,
+            "text": "s"
+          },
+          {
+            "t0": 1.08,
+            "t1": 1.2,
+            "text": "i"
+          },
+          {
+            "t0": 1.2,
+            "t1": 1.32,
+            "text": "d"
+          },
+          {
+            "t0": 1.32,
+            "t1": 1.44,
+            "text": "e"
+          },
+          {
+            "t0": 1.44,
+            "t1": 1.56,
+            "text": ","
+          },
+          {
+            "t0": 1.56,
+            "t1": 1.68,
+            "text": " "
+          },
+          {
+            "t0": 1.68,
+            "t1": 1.8,
+            "text": "l"
+          },
+          {
+            "t0": 1.8,
+            "t1": 1.92,
+            "text": "o"
+          },
+          {
+            "t0": 1.92,
+            "t1": 2.04,
+            "text": "o"
+          },
+          {
+            "t0": 2.04,
+            "t1": 2.16,
+            "text": "k"
+          },
+          {
+            "t0": 2.16,
+            "t1": 2.28,
+            "text": " "
+          },
+          {
+            "t0": 2.28,
+            "t1": 2.4,
+            "text": "u"
+          },
+          {
+            "t0": 2.4,
+            "t1": 2.52,
+            "text": "p"
+          },
+          {
+            "t0": 2.52,
+            "t1": 2.64,
+            "text": "."
+          }
+        ],
+        "words": [
+          {
+            "t0": 0.0,
+            "t1": 0.12,
+            "text": "i"
+          },
+          {
+            "t0": 0.24,
+            "t1": 0.48,
+            "text": "am"
+          },
+          {
+            "t0": 0.6,
+            "t1": 1.56,
+            "text": "outside,"
+          },
+          {
+            "t0": 1.68,
+            "t1": 2.16,
+            "text": "look"
+          },
+          {
+            "t0": 2.28,
+            "t1": 2.64,
+            "text": "up."
+          }
+        ]
+      }
+    },
+    "msg-bewicks-wren": {
+      "id": "msg-bewicks-wren",
+      "src": "/audio/messages/msg-bewicks-wren.m4a",
+      "mime": "audio/mp4",
+      "bytes": 44563,
+      "credit": {
+        "title": "Encoded message, trained wren voice",
+        "kind": "encoded-message",
+        "source": "CICI BIRD DDSP model ml/checkpoints/wren.pt, trained on the Bewick's wren corpus in data/bewicks_wren",
+        "license": "Model output, but built on non-commercially licensed recordings",
+        "verified": false,
+        "note": "The audio is the model's own output, but its note motifs are real note shapes lifted out of the training recordings, and ALL 250 clips in that selection are licensed non-commercially (CC BY-NC-SA), 44 of them NoDerivatives. Unlike the sparrow there is no permissive subset to fall back on: the whole 893-clip Bewick's wren corpus contains only 11 CC BY-SA clips. TODO before launch: obtain commercial permission from the recordists whose notes are actually borrowed, or source new recordings."
+      },
+      "speciesSlug": "bewicks-wren",
+      "synthesis": {
+        "method": "neural-ddsp",
+        "engine": "ml/generate.py",
+        "model": "ml/checkpoints/wren.pt",
+        "trainedOn": "250 ranked clips from 51 Bewick's wren recordings (data/bewicks_wren, ml/selections/wren_best250.json)",
+        "decoder": "ml/generate.py (motif templates + Viterbi alignment)"
+      },
+      "durationSec": 4.955,
+      "text": "i heard you from the garden.",
+      "normalizedText": "i heard you from the garden.",
+      "decodedText": "i heard you from the garden.",
+      "decodeAccuracy": 1.0,
+      "cues": {
+        "chars": [
+          {
+            "t0": 0.0,
+            "t1": 0.1016,
+            "text": "i"
+          },
+          {
+            "t0": 0.1016,
+            "t1": 0.2525,
+            "text": " "
+          },
+          {
+            "t0": 0.2525,
+            "t1": 0.3889,
+            "text": "h"
+          },
+          {
+            "t0": 0.4383,
+            "t1": 0.624,
+            "text": "e"
+          },
+          {
+            "t0": 0.6647,
+            "t1": 0.7576,
+            "text": "a"
+          },
+          {
+            "t0": 0.7808,
+            "t1": 0.9201,
+            "text": "r"
+          },
+          {
+            "t0": 0.9607,
+            "t1": 1.0333,
+            "text": "d"
+          },
+          {
+            "t0": 1.0333,
+            "t1": 1.1552,
+            "text": " "
+          },
+          {
+            "t0": 1.1552,
+            "t1": 1.341,
+            "text": "y"
+          },
+          {
+            "t0": 1.3845,
+            "t1": 1.6515,
+            "text": "o"
+          },
+          {
+            "t0": 1.6747,
+            "t1": 1.8054,
+            "text": "u"
+          },
+          {
+            "t0": 1.8054,
+            "t1": 1.9766,
+            "text": " "
+          },
+          {
+            "t0": 1.9766,
+            "t1": 2.1914,
+            "text": "f"
+          },
+          {
+            "t0": 2.2204,
+            "t1": 2.3597,
+            "text": "r"
+          },
+          {
+            "t0": 2.3888,
+            "t1": 2.6558,
+            "text": "o"
+          },
+          {
+            "t0": 2.6761,
+            "t1": 2.9518,
+            "text": "m"
+          },
+          {
+            "t0": 2.9518,
+            "t1": 3.1463,
+            "text": " "
+          },
+          {
+            "t0": 3.1463,
+            "t1": 3.2653,
+            "text": "t"
+          },
+          {
+            "t0": 3.3088,
+            "t1": 3.4453,
+            "text": "h"
+          },
+          {
+            "t0": 3.483,
+            "t1": 3.6688,
+            "text": "e"
+          },
+          {
+            "t0": 3.6688,
+            "t1": 3.7732,
+            "text": " "
+          },
+          {
+            "t0": 3.7732,
+            "t1": 3.9909,
+            "text": "g"
+          },
+          {
+            "t0": 4.0141,
+            "t1": 4.107,
+            "text": "a"
+          },
+          {
+            "t0": 4.1593,
+            "t1": 4.2986,
+            "text": "r"
+          },
+          {
+            "t0": 4.3247,
+            "t1": 4.3973,
+            "text": "d"
+          },
+          {
+            "t0": 4.4292,
+            "t1": 4.615,
+            "text": "e"
+          },
+          {
+            "t0": 4.6498,
+            "t1": 4.821,
+            "text": "n"
+          },
+          {
+            "t0": 4.853,
+            "t1": 4.9546,
+            "text": "."
+          }
+        ],
+        "words": [
+          {
+            "t0": 0.0,
+            "t1": 0.1016,
+            "text": "i"
+          },
+          {
+            "t0": 0.2525,
+            "t1": 1.0333,
+            "text": "heard"
+          },
+          {
+            "t0": 1.1552,
+            "t1": 1.8054,
+            "text": "you"
+          },
+          {
+            "t0": 1.9766,
+            "t1": 2.9518,
+            "text": "from"
+          },
+          {
+            "t0": 3.1463,
+            "t1": 3.6688,
+            "text": "the"
+          },
+          {
+            "t0": 3.7732,
+            "t1": 4.9546,
+            "text": "garden."
+          }
+        ]
+      }
+    },
+    "msg-song-sparrow": {
+      "id": "msg-song-sparrow",
+      "src": "/audio/messages/msg-song-sparrow.m4a",
+      "mime": "audio/mp4",
+      "bytes": 33830,
+      "credit": {
+        "title": "Encoded message, trained song sparrow voice",
+        "kind": "encoded-message",
+        "source": "CICI BIRD DDSP model ml/checkpoints/sparrow_win256.pt, trained on 250 clips from 114 recordings in data/song_sparrow",
+        "license": "UNCONFIRMED \u2014 see note",
+        "verified": false,
+        "note": "The audio is the model's own output, but its note motifs are real note shapes lifted out of the training recordings, and 1192 of the 1256 clips in that corpus are licensed non-commercially (CC BY-NC-SA or BY-NC-ND); some are NoDerivatives. TODO before launch: either retrain and rebuild the motif bank from the 64 CC BY-SA clips only, or obtain commercial permission from the recordists whose notes are actually borrowed."
+      },
+      "speciesSlug": "song-sparrow",
+      "synthesis": {
+        "method": "neural-ddsp",
+        "engine": "ml/generate_species.py",
+        "model": "ml/checkpoints/sparrow_win256.pt",
+        "trainedOn": "250 clips from 114 song sparrow recordings (data/song_sparrow)",
+        "decoder": "ml/generate_species.py (motif templates + Viterbi alignment)"
+      },
+      "durationSec": 3.579,
+      "text": "come home, it is late.",
+      "normalizedText": "come home, it is late.",
+      "decodedText": "come home, it is late.",
+      "decodeAccuracy": 1.0,
+      "cues": {
+        "chars": [
+          {
+            "t0": 0.0,
+            "t1": 0.0987,
+            "text": "c"
+          },
+          {
+            "t0": 0.148,
+            "t1": 0.267,
+            "text": "o"
+          },
+          {
+            "t0": 0.3338,
+            "t1": 0.4586,
+            "text": "m"
+          },
+          {
+            "t0": 0.5079,
+            "t1": 0.6124,
+            "text": "e"
+          },
+          {
+            "t0": 0.6124,
+            "t1": 0.7808,
+            "text": " "
+          },
+          {
+            "t0": 0.7808,
+            "t1": 0.8766,
+            "text": "h"
+          },
+          {
+            "t0": 0.9433,
+            "t1": 1.0623,
+            "text": "o"
+          },
+          {
+            "t0": 1.1175,
+            "t1": 1.2423,
+            "text": "m"
+          },
+          {
+            "t0": 1.2742,
+            "t1": 1.3787,
+            "text": "e"
+          },
+          {
+            "t0": 1.4338,
+            "t1": 1.5761,
+            "text": ","
+          },
+          {
+            "t0": 1.5761,
+            "t1": 1.7183,
+            "text": " "
+          },
+          {
+            "t0": 1.7183,
+            "t1": 1.8054,
+            "text": "i"
+          },
+          {
+            "t0": 1.8634,
+            "t1": 2.0172,
+            "text": "t"
+          },
+          {
+            "t0": 2.0172,
+            "t1": 2.2059,
+            "text": " "
+          },
+          {
+            "t0": 2.2059,
+            "t1": 2.293,
+            "text": "i"
+          },
+          {
+            "t0": 2.3336,
+            "t1": 2.4613,
+            "text": "s"
+          },
+          {
+            "t0": 2.4613,
+            "t1": 2.6761,
+            "text": " "
+          },
+          {
+            "t0": 2.6761,
+            "t1": 2.7574,
+            "text": "l"
+          },
+          {
+            "t0": 2.8183,
+            "t1": 2.9431,
+            "text": "a"
+          },
+          {
+            "t0": 2.9954,
+            "t1": 3.1492,
+            "text": "t"
+          },
+          {
+            "t0": 3.1811,
+            "t1": 3.2856,
+            "text": "e"
+          },
+          {
+            "t0": 3.3176,
+            "t1": 3.5788,
+            "text": "."
+          }
+        ],
+        "words": [
+          {
+            "t0": 0.0,
+            "t1": 0.6124,
+            "text": "come"
+          },
+          {
+            "t0": 0.7808,
+            "t1": 1.5761,
+            "text": "home,"
+          },
+          {
+            "t0": 1.7183,
+            "t1": 2.0172,
+            "text": "it"
+          },
+          {
+            "t0": 2.2059,
+            "t1": 2.4613,
+            "text": "is"
+          },
+          {
+            "t0": 2.6761,
+            "t1": 3.5788,
+            "text": "late."
+          }
+        ]
+      }
+    }
+  }
+}

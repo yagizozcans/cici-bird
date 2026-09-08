@@ -1,0 +1,28 @@
+# --- Datasets and derived caches -------------------------------------------
+# data/ is 3.6 GB of wild recordings (xeno-canto etc). Not ours to redistribute,
+# and too big for git. Everything below is REGENERABLE from it.
+data/
+
+# Feature caches: ~380 MB, rebuilt by ml/train.py. They are fingerprinted
+# (v3|key|n_clips|band|win|...) precisely so a missing cache is safe and a
+# STALE one is not — never commit one, a checked-in cache is a stale cache.
+ml/feature_cache*.npz
+ml/backup_pre_w256/
+
+# Generated audio + run logs from the ml/ scripts. Reproduce, don't archive.
+ml/out/
+engine/out/
+
+# --- Environments and build output ------------------------------------------
+.venv/
+__pycache__/
+*.py[cod]
+
+node_modules/
+.next/
+*.tsbuildinfo
+
+# --- Local-only ---------------------------------------------------------------
+.env*.local
+.DS_Store
+.claude/settings.local.json
