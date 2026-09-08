@@ -21,6 +21,7 @@ export type AnalyticsEvent =
   | 'message_play'         // a shared /m/:id message played
   | 'install_cta_click'    // any App Store / Google Play button
   | 'species_filter'       // catalog filter applied
+  | 'encode_submit'        // visitor encoded their own message (voice slug only)
 
 type Props = Record<string, string | number | boolean>
 

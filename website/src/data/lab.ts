@@ -1,8 +1,11 @@
 import wrenJson from './lab/bewicks-wren-voice-space.json'
 import sparrowJson from './lab/song-sparrow-voice-space.json'
 import cardinalJson from './lab/northern-cardinal-voice-space.json'
+import wrenWildJson from './lab/bewicks-wren-wild-voices.json'
+import sparrowWildJson from './lab/song-sparrow-wild-voices.json'
+import cardinalWildJson from './lab/northern-cardinal-wild-voices.json'
 import { getTrainedVoice } from './audio-manifest'
-import type { VoiceSpaceData } from './lab-types'
+import type { VoiceSpaceData, WildVoicesData } from './lab-types'
 
 /**
  * The Lab registry, and typed readers for its generated data.
@@ -111,4 +114,69 @@ export function voiceSpace(speciesSlug: string): VoiceSpaceData {
     )
   }
   return data
+}
+
+/**
+ * Fragment id of the "real bird voices" section on an entry page.
+ *
+ * Shared so the Lab index can link into the section and the entry can render
+ * the target: two places writing the same string is exactly how a jump link
+ * quietly stops jumping.
+ */
+export const WILD_VOICES_ANCHOR = 'real-bird-voices'
+
+// Same arrangement as VOICE_SPACES: one generated file per bird, typed here.
+const WILD_VOICES: Record<string, WildVoicesData> = {
+  'bewicks-wren': wrenWildJson as unknown as WildVoicesData,
+  'song-sparrow': sparrowWildJson as unknown as WildVoicesData,
+  'northern-cardinal': cardinalWildJson as unknown as WildVoicesData,
+}
+
+/**
+ * One bird's field recordings and what the decoder read out of them.
+ *
+ * Under the same checkpoint contract as `voiceSpace`, for a sharper reason:
+ * the decoder's template bank is built from the model's OWN renderings, so a
+ * different checkpoint reads different letters out of the same recording. The
+ * text on the page would then be a reading no visitor could reproduce from the
+ * audio the site plays. Regenerate with `npm run wild` after `npm run audio`.
+ *
+ * The clip sources are versioned by this file's own build time rather than the
+ * manifest's: these clips are written by a different script, so the manifest's
+ * stamp would not change when they do, and a browser would keep serving the
+ * audio the old decode belongs to.
+ */
+export function wildVoices(speciesSlug: string): WildVoicesData {
+  const data = WILD_VOICES[speciesSlug]
+  if (!data) {
+    throw new Error(
+      `No wild-voice data for "${speciesSlug}". Known: ${Object.keys(WILD_VOICES).join(', ')}`,
+    )
+  }
+  const voice = getTrainedVoice(speciesSlug)
+  if (!voice) {
+    throw new Error(
+      `Wild-voice data for "${speciesSlug}" but the manifest has no trained voice for it.`,
+    )
+  }
+  if (voice.model !== data.meta.checkpoint) {
+    throw new Error(
+      `Wild-voice data for ${speciesSlug} was decoded with ${data.meta.checkpoint} but the ` +
+        `site's audio was rendered with ${voice.model}. Run \`npm run wild\` to regenerate it.`,
+    )
+  }
+  // The section states that none of these clips is read as a message. If the
+  // decoder ever believed one, that sentence is false and the page must fail
+  // rather than keep asserting it.
+  if (data.meta.readAsMessage.length > 0) {
+    throw new Error(
+      `Wild-voice data for ${speciesSlug} has clips the decoder read as messages ` +
+        `(${data.meta.readAsMessage.join(', ')}). The Lab section claims the opposite.`,
+    )
+  }
+  const v = encodeURIComponent(data.meta.generatedAt)
+  return {
+    meta: data.meta,
+    clips: data.clips.map((c) => ({ ...c, src: `${c.src}?v=${v}` })),
+  }
 }

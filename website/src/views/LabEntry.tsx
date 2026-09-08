@@ -2,9 +2,16 @@ import Link from 'next/link'
 import { PageShell } from '@/components/PageShell'
 import { JsonLd } from '@/components/JsonLd'
 import { VoiceSpace } from '@/components/lab/VoiceSpace'
+import { encoderAvailable } from '@/lib/encoder-paths'
+import { WildVoices } from '@/components/lab/WildVoices'
 import { getDictionary } from '@/i18n/dictionary'
 import { LOCALE_TAG, localePath, type Locale } from '@/i18n/locale'
-import { voiceSpace, type LabEntry as Entry } from '@/data/lab'
+import {
+  WILD_VOICES_ANCHOR,
+  voiceSpace,
+  wildVoices,
+  type LabEntry as Entry,
+} from '@/data/lab'
 import { getSpecies, hasTrainedVoice, speciesName } from '@/data/species'
 import { getTrainedVoice, toPlayable } from '@/data/audio-manifest'
 import { breadcrumbLd, graph } from '@/lib/jsonld'
@@ -155,6 +162,13 @@ function VoiceSpaceEntry({
             playLabel={dict.demo.play}
             pauseLabel={dict.demo.pause}
             subtitleHint={dict.species.encodedSampleNote}
+            // A sentence the reader writes joins the message chips and lights
+            // the same points as the built ones — one bird, so no picker.
+            encoder={{
+              locale,
+              voice: { slug: species.slug, name, accent: species.palette.accent },
+              available: encoderAvailable(),
+            }}
           />
         </div>
       </section>
@@ -249,7 +263,80 @@ function VoiceSpaceEntry({
           </div>
         </div>
       </section>
+
+      {/* ---------------------------------------------------------------- */}
+      {/* 5. REAL BIRD VOICES                                               */}
+      {/* ---------------------------------------------------------------- */}
+      {/* Last on purpose. The four sections above are all about our alphabet,
+          and a reader who has just watched letters light up as a bird sings
+          them is exactly the reader who should now hear the actual bird and
+          see the decoder fail on it. Put earlier, it answers a question
+          nobody has asked yet. */}
+      <WildVoicesSection speciesSlug={entry.speciesSlug} locale={locale} name={name} />
     </>
+  )
+}
+
+function WildVoicesSection({
+  speciesSlug,
+  locale,
+  name,
+}: {
+  speciesSlug: string
+  locale: Locale
+  name: string
+}) {
+  const dict = getDictionary(locale)
+  const copy = dict.lab.wildVoices
+  // Runs the checkpoint guard, and the guard that no clip here was read as a
+  // message — the section's copy asserts both.
+  const { meta, clips } = wildVoices(speciesSlug)
+  const species = getSpecies(speciesSlug)
+  if (!species) throw new Error(`no species "${speciesSlug}"`)
+
+  return (
+    // The Lab index links straight here, so the section is an anchor target.
+    // `scroll-mt` clears the sticky header (57 px measured), which would
+    // otherwise land the jump with the heading underneath it.
+    <section id={WILD_VOICES_ANCHOR} className="wrap scroll-mt-20 py-16">
+      <SectionHeading title={copy.title} />
+      <p className="mt-4 max-w-measure text-pretty text-[16px] leading-relaxed text-ink/85">
+        {copy.lede.replace('{species}', name)}
+      </p>
+      <p className="mt-4 max-w-measure text-[15px] leading-relaxed text-muted">
+        {copy.body}
+      </p>
+
+      <WildVoices
+        data={{ meta, clips }}
+        copy={copy}
+        accent={species.palette.accent}
+        playLabel={dict.demo.play}
+        pauseLabel={dict.demo.pause}
+      />
+
+      <h3 className="mt-12 text-[16px] font-semibold tracking-tight text-ink">
+        {copy.statsTitle}
+      </h3>
+      <dl className="mt-5 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <Field label={copy.licensable}>
+          <span className="font-mono tabular-nums">{meta.licensablePool}</span>{' '}
+          {copy.licensableOf.replace('{total}', String(meta.corpusClips))}
+        </Field>
+        <Field label={copy.recordings}>
+          <span className="font-mono tabular-nums">{meta.sourceRecordings}</span>
+        </Field>
+        <Field label={copy.decoderLabel}>
+          <span className="font-mono text-[12px]">{meta.decoder}</span>
+        </Field>
+        <Field label={copy.checkpointLabel}>
+          <span className="font-mono text-[12px]">{meta.checkpoint}</span>
+        </Field>
+      </dl>
+      <p className="mt-5 max-w-measure text-[13px] leading-relaxed text-muted">
+        {copy.recordingsNote}
+      </p>
+    </section>
   )
 }
 

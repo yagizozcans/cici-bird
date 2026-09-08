@@ -12,7 +12,9 @@ import {
 import type { VoiceSpaceData } from '@/data/lab-types'
 import type { PlayableAudio } from '@/data/audio-manifest'
 import type { Dictionary } from '@/i18n/dictionary'
+import type { Locale } from '@/i18n/locale'
 import { useAudio } from '@/components/useAudio'
+import { InteractiveEncoder, type EncoderVoice } from '@/components/InteractiveEncoder'
 import { AudioPlayerView } from '@/components/AudioPlayer'
 import {
   AXIS_VIEWS,
@@ -49,7 +51,14 @@ import { LetterReadout, type ReadoutState } from './LetterReadout'
  *    notes. Between notes the plot shows nothing lit and the panel says so;
  *    that gap is the bird articulating, not a glitch.
  *
- * 3. The data arrives as a PROP, from the server component that read it
+ * 3. A message the VISITOR wrote joins the chips like any other, because the
+ *    plot cannot tell the difference: the lighting is driven entirely by
+ *    `asset.cues`, and the encoder renders through the same checkpoint this
+ *    page's data was measured against. So the encoder hands its result up
+ *    here rather than playing it itself — one player, one playhead, and the
+ *    visitor's own sentence lights the same 31 points.
+ *
+ * 4. The data arrives as a PROP, from the server component that read it
  *    through `data/lab.ts` (which no client module may import — it pulls the
  *    ~100 KB audio manifest in with it). Importing the JSON here instead
  *    would keep it out of the RSC payload, which is what this file did while
@@ -79,6 +88,8 @@ interface Props {
   playLabel: string
   pauseLabel: string
   subtitleHint?: string
+  /** Present on the lab pages: lets the visitor add a message of their own. */
+  encoder?: { locale: Locale; voice: EncoderVoice; available: boolean }
 }
 
 export function VoiceSpace({
@@ -90,9 +101,14 @@ export function VoiceSpace({
   playLabel,
   pauseLabel,
   subtitleHint,
+  encoder,
 }: Props) {
+  // One slot, not a growing list: a second encode replaces the first, so the
+  // chip row stays the built messages plus at most "yours".
+  const [mine, setMine] = useState<PlayableAudio | null>(null)
+  const all = mine ? [...messages, mine] : messages
   const [activeId, setActiveId] = useState(messages[0].id)
-  const asset = messages.find((m) => m.id === activeId) ?? messages[0]
+  const asset = all.find((m) => m.id === activeId) ?? all[0]
 
   // The view lives here, above the per-message session, so switching
   // messages keeps whatever angle the visitor has turned the plot to.
@@ -225,7 +241,7 @@ export function VoiceSpace({
         <span className="text-[11px] font-semibold uppercase tracking-[0.12em] text-muted">
           {copy.chooseMessage}
         </span>
-        {messages.map((m) => {
+        {all.map((m) => {
           const on = m.id === asset.id
           return (
             <button
@@ -270,6 +286,19 @@ export function VoiceSpace({
         pauseLabel={pauseLabel}
         subtitleHint={subtitleHint}
       />
+
+      {encoder && (
+        <InteractiveEncoder
+          locale={encoder.locale}
+          voice={encoder.voice}
+          available={encoder.available}
+          className="mt-10 max-w-measure"
+          onResult={(audio) => {
+            setMine(audio)
+            setActiveId(audio.id)
+          }}
+        />
+      )}
     </div>
   )
 }

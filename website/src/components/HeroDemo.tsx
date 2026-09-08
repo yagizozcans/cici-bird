@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import type { ReactNode } from 'react'
 import { AudioPlayer } from './AudioPlayer'
 import { getDictionary } from '@/i18n/dictionary'
 import type { Locale } from '@/i18n/locale'
@@ -19,8 +19,10 @@ import { track } from '@/lib/analytics'
  * the two players sit adjacent, sharing one sentence shown as text above both,
  * and the bird voices switch in place instead of being three separate cards.
  *
- * The tier badge on each voice does quiet work: it introduces the collection
- * mechanic before the visitor has read a single word about it.
+ * The voice PICKER is not here. It moved to HeroStage, which owns the one
+ * selection this card and the encoder beneath it both read — two pickers for
+ * the same three birds, able to disagree, would be worse than none. This card
+ * is told which voice is active and renders it.
  */
 
 export interface DemoVoice {
@@ -40,14 +42,18 @@ export function HeroDemo({
   human,
   humanText,
   voices,
+  activeSlug,
+  children,
 }: {
   locale: Locale
   human: PlayableAudio
   humanText: string
   voices: DemoVoice[]
+  activeSlug: string | undefined
+  /** Rendered inside the card, under the demo — the interactive encoder. */
+  children?: ReactNode
 }) {
   const dict = getDictionary(locale)
-  const [activeSlug, setActiveSlug] = useState(voices[0]?.slug)
   const active = voices.find((v) => v.slug === activeSlug) ?? voices[0]
 
   return (
@@ -87,58 +93,6 @@ export function HeroDemo({
           </p>
         </div>
 
-        {/* Voice picker. A radiogroup rather than tabs: the visitor is choosing
-            which rendering to hear, and each option must announce its tier. */}
-        <div
-          role="radiogroup"
-          aria-label={dict.demo.pick}
-          className="mt-3 flex flex-wrap gap-2"
-        >
-          {voices.map((voice) => {
-            const selected = voice.slug === active?.slug
-            return (
-              <button
-                key={voice.slug}
-                type="button"
-                role="radio"
-                aria-checked={selected}
-                onClick={() => {
-                  setActiveSlug(voice.slug)
-                  track('demo_voice_switch', { voice: voice.slug })
-                }}
-                className={`group flex items-center gap-2 rounded-full border px-3.5 py-2 text-[13px] transition ${
-                  selected
-                    ? 'border-ink bg-ink text-paper'
-                    : 'border-line bg-paper text-ink hover:border-ink/40'
-                }`}
-              >
-                <span
-                  aria-hidden="true"
-                  className="h-2 w-2 rounded-full"
-                  style={{ backgroundColor: voice.accent }}
-                />
-                <span className="font-medium">{voice.name}</span>
-                {voice.neural && (
-                  <span
-                    className={`rounded-full px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-wide ${
-                      selected ? 'bg-paper/20 text-paper' : 'bg-ochre/15 text-ochre-deep'
-                    }`}
-                  >
-                    {dict.demo.neuralTag}
-                  </span>
-                )}
-                <span
-                  className={`text-[10px] uppercase tracking-wide ${
-                    selected ? 'text-paper/60' : 'text-muted'
-                  }`}
-                >
-                  {dict.species.tierNames[voice.tier]}
-                </span>
-              </button>
-            )
-          })}
-        </div>
-
         {active && (
           <div className="mt-5">
             {/* `key` forces a fresh player per voice: switching voices must
@@ -167,6 +121,8 @@ export function HeroDemo({
           </div>
         )}
       </div>
+
+      {children}
     </div>
   )
 }

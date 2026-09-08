@@ -28,6 +28,11 @@ const config: Config = {
       fontFamily: { sans: SANS_STACK.split(', ') },
       maxWidth: { measure: '68ch' },
       borderRadius: { xl2: '1.25rem' },
+      // The caret on the encoder's animated placeholder. A keyframe rather
+      // than a JS timer so the reduced-motion block in globals.css already
+      // stops it, along with every other animation on the page.
+      keyframes: { caret: { '0%, 45%': { opacity: '1' }, '55%, 100%': { opacity: '0' } } },
+      animation: { caret: 'caret 1.1s steps(1, end) infinite' },
     },
   },
   plugins: [],

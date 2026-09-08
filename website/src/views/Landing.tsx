@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { PageShell } from '@/components/PageShell'
-import { HeroDemo, type DemoVoice } from '@/components/HeroDemo'
+import { HeroStage, type HeroVoice } from '@/components/HeroStage'
 import { InstallCTA } from '@/components/InstallCTA'
 import { SpeciesArtwork } from '@/components/SpeciesArtwork'
 import { getDictionary } from '@/i18n/dictionary'
@@ -14,9 +14,11 @@ import {
 import {
   getAsset,
   getAssetOrNull,
+  getTrainedVoice,
   toPlayable,
   type AudioAsset,
 } from '@/data/audio-manifest'
+import { encoderAvailable } from '@/lib/encoder-paths'
 
 /**
  * The landing page (website.md §3).
@@ -52,7 +54,7 @@ export function Landing({ locale }: { locale: Locale }) {
   const dict = getDictionary(locale)
   const human = getAsset('demo-human')
 
-  const voices: DemoVoice[] = allSpecies()
+  const voices: HeroVoice[] = allSpecies()
     .map((species) => ({ species, asset: getAssetOrNull(`demo-${species.slug}`) }))
     .filter(
       (pair): pair is { species: Species; asset: AudioAsset } =>
@@ -66,6 +68,9 @@ export function Landing({ locale }: { locale: Locale }) {
       audio: toPlayable(asset.id),
       decodeAccuracy: asset.decodeAccuracy ?? 1,
       neural: asset.synthesis?.method === 'neural-ddsp',
+      scientificName: species.scientificName,
+      voiceNote: species.voiceNote[locale],
+      corpusSize: getTrainedVoice(species.slug)?.corpusSize ?? null,
     }))
 
   const preview = allSpecies().slice(0, PREVIEW_COUNT)
@@ -77,45 +82,25 @@ export function Landing({ locale }: { locale: Locale }) {
       {/* ---------------------------------------------------------------- */}
       <section className="wrap pb-12 pt-10 sm:pt-14">
         {/*
-          ORDERING IS A SPEC REQUIREMENT, AND IT DIFFERS BY BREAKPOINT.
-
-          §3 puts the one-liner, then the demo, then the install buttons above
-          the fold — and says the page is mobile-first, because most traffic
-          arrives on a phone from a shared link. A plain two-column grid stacks
-          into heading, CTA, demo on a phone, which asks for the install before
-          the visitor has heard anything. So the demo is explicitly ordered
-          second on small screens, and explicit grid placement restores the
-          two-column reading on large ones.
+          The stage owns the grid because the bird selector and the players it
+          drives are different cells of it — see HeroStage for the ordering
+          rules and for why the install buttons are no longer here. Only the
+          heading stays server-rendered, passed in as children.
         */}
-        <div className="flex flex-col gap-8 lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:grid-rows-[auto_1fr] lg:gap-x-14 lg:gap-y-8">
-          <div className="order-1 lg:col-start-1 lg:row-start-1 lg:pt-6">
-            <h1 className="text-balance text-[38px] font-semibold leading-[1.05] tracking-[-0.03em] text-ink sm:text-[52px]">
-              {dict.hero.oneLiner}
-            </h1>
-            <p className="mt-5 max-w-[42ch] text-pretty text-[16px] leading-relaxed text-muted sm:text-[17px]">
-              {dict.hero.sub}
-            </p>
-          </div>
-
-          <div className="order-3 lg:col-start-1 lg:row-start-2">
-            <InstallCTA locale={locale} size="large" placement="hero" />
-          </div>
-
-          <div className="order-2 lg:col-start-2 lg:row-span-2 lg:row-start-1">
-            <div className="mb-3 flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4">
-              <h2 className="text-[13px] font-semibold uppercase tracking-[0.12em] text-ink">
-                {dict.hero.demoTitle}
-              </h2>
-              <p className="text-[12px] text-muted">{dict.hero.demoHint}</p>
-            </div>
-            <HeroDemo
-              locale={locale}
-              human={toPlayable('demo-human')}
-              humanText={human.text ?? ''}
-              voices={voices}
-            />
-          </div>
-        </div>
+        <HeroStage
+          locale={locale}
+          voices={voices}
+          human={toPlayable('demo-human')}
+          humanText={human.text ?? ''}
+          encoderAvailable={encoderAvailable()}
+        >
+          <h1 className="text-balance text-[38px] font-semibold leading-[1.05] tracking-[-0.03em] text-ink sm:text-[52px]">
+            {dict.hero.oneLiner}
+          </h1>
+          <p className="mt-5 max-w-[42ch] text-pretty text-[16px] leading-relaxed text-muted sm:text-[17px]">
+            {dict.hero.sub}
+          </p>
+        </HeroStage>
       </section>
 
       {/* ---------------------------------------------------------------- */}

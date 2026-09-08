@@ -11,6 +11,7 @@
     "typecheck": "tsc --noEmit",
     "audio": "python3 scripts/generate_audio.py",
     "lab": "python3 scripts/generate_lab.py",
+    "wild": "python3 scripts/generate_wild_voices.py",
     "check:launch": "node scripts/check-launch.mjs",
     "check:launch:strict": "node scripts/check-launch.mjs --strict"
   },

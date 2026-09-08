@@ -3,7 +3,7 @@ import { PageShell } from '@/components/PageShell'
 import { JsonLd } from '@/components/JsonLd'
 import { getDictionary } from '@/i18n/dictionary'
 import { LOCALE_TAG, localePath, type Locale } from '@/i18n/locale'
-import { LAB_ENTRIES, type LabEntry } from '@/data/lab'
+import { LAB_ENTRIES, WILD_VOICES_ANCHOR, wildVoices, type LabEntry } from '@/data/lab'
 import { getSpecies, speciesName } from '@/data/species'
 import { breadcrumbLd, graph } from '@/lib/jsonld'
 
@@ -63,6 +63,9 @@ function EntryCard({ entry, locale }: { entry: LabEntry; locale: Locale }) {
     day: 'numeric',
     timeZone: 'UTC',
   }).format(new Date(entry.date))
+  // How many field recordings the entry actually carries, from the generated
+  // file rather than a number typed into copy.
+  const clips = wildVoices(entry.speciesSlug).meta.nClips
 
   return (
     <li className="relative rounded-xl2 border border-line bg-white/60 p-5 transition hover:border-ink/30 sm:p-6">
@@ -89,7 +92,21 @@ function EntryCard({ entry, locale }: { entry: LabEntry; locale: Locale }) {
         </Link>
       </h2>
       <p className="mt-2 text-[14px] leading-relaxed text-muted">{copy.summary}</p>
-      <p className="mt-4 text-[13px] font-medium text-ochre-deep">{dict.lab.open} →</p>
+      <div className="mt-4 flex flex-wrap items-baseline gap-x-4 gap-y-2 text-[13px] font-medium">
+        <span className="text-ochre-deep">{dict.lab.open} →</span>
+        {/* The entry's second half is a different thing from its plot — real
+            recordings of the bird, read by our decoder — and a visitor who
+            wanted THAT would never guess it lives at the bottom of a page
+            called "voice space". So it gets its own way in, deep-linked to
+            the section. `relative z-10` lifts it above the card's stretched
+            title link, which otherwise covers every pixel of the card. */}
+        <Link
+          href={localePath(locale, `/lab/${entry.slug}#${WILD_VOICES_ANCHOR}`)}
+          className="relative z-10 text-muted underline-offset-2 hover:text-ink hover:underline"
+        >
+          {dict.lab.wildLink.replace('{n}', String(clips))} →
+        </Link>
+      </div>
     </li>
   )
 }

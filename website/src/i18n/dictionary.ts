@@ -30,6 +30,9 @@ const en = {
     speciesLabel: 'Species',
     dateLabel: 'Published',
     open: 'Read',
+    // The index's second way into an entry. {n} is the clip count, from the
+    // generated data — never a number typed here.
+    wildLink: '{n} real bird voices',
     entries: {
       'wren-voice-space': {
         title: 'Wren voice space',
@@ -129,6 +132,30 @@ const en = {
           'Everything the points do left-to-right and front-to-back is the bird: how fast each note sweeps and how long it lasts were borrowed from real recordings of the {species}, not designed.',
       },
     },
+
+    // The counterweight to the voice space: the same decoder, pointed at the
+    // real bird. Every number and every letter comes from the generated file;
+    // this copy only frames them, so none of it may state a result.
+    wildVoices: {
+      title: 'Real bird voices',
+      lede: 'Everything else on this page is our audio. These five are the {species} itself, from the same archive the model was trained on — and beside each one is what our decoder reads out of it, run on the very file you are playing.',
+      body: 'The decoder is closed-set: it has thirty-one letters and no way to answer “none of these”, so it always returns its best explanation. Pointed at a wild recording it returns letters, confidently, and they mean nothing. What tells the difference is not the text but the score underneath it — how well one whole sequence of our motifs, at our durations, with our gaps, explains the entire clip. A real bird sings notes like ours; it does not lay them out like ours.',
+      clipLabel: 'Field recording',
+      readsAs: 'Our decoder reads',
+      readsNothing: 'nothing at all',
+      scoreLabel: 'Score',
+      thresholdLabel: 'believed above',
+      messageScoreLabel: 'our own message',
+      verdict: 'Below the threshold: not read as a message.',
+      statsTitle: 'Which five, and why these five',
+      licensable: 'Licensed to show',
+      licensableOf: 'of {total} corpus clips',
+      recordings: 'Distinct recordings',
+      recordingsNote:
+        'Only clips under CC BY-SA can be published here; the rest of the corpus is non-commercial. Where that leaves a single recording, the five clips are five passages of one bird.',
+      decoderLabel: 'Decoder',
+      checkpointLabel: 'Checkpoint',
+    },
   },
 
   hero: {
@@ -136,6 +163,24 @@ const en = {
     sub: 'Speak a message. It arrives as a bird — and it arrives readable. The birds you find in the real world become the voices you can speak in.',
     demoTitle: 'Hear it now',
     demoHint: 'Nothing to install. Nothing to sign up for.',
+  },
+
+  // The interactive encoder. `button` is the same English word in both
+  // locales on purpose: it labels the one control that performs the
+  // product's defining verb, and keeping it identical keeps screenshots,
+  // support answers and the spec talking about the same button.
+  encoder: {
+    title: 'Now yours',
+    hint: 'Up to 80 characters. a–z, spaces and . , ? ’ are sung; anything else becomes a pause.',
+    placeholderStatic: 'Type a message…',
+    button: 'Encode',
+    encoding: 'Encoding…',
+    error: 'That did not encode. Try again.',
+    unavailable: 'Live encoding runs from a local checkout — it needs the models and the recording corpus, which are not deployed. The clips above are the same engine, rendered ahead of time.',
+    resultLabel: 'Your message',
+    voiceLabel: 'Voice',
+    trainedOnLabel: 'Trained on',
+    clips: '{n} clips',
   },
 
   demo: {
@@ -441,6 +486,7 @@ const tr: Dictionary = {
     speciesLabel: 'Tür',
     dateLabel: 'Yayın',
     open: 'Oku',
+    wildLink: '{n} gerçek kuş sesi',
     entries: {
       'wren-voice-space': {
         title: 'Çıtkuşunun ses uzayı',
@@ -538,6 +584,27 @@ const tr: Dictionary = {
           'Noktaların sağa-sola ve öne-arkaya yaptığı her şey kuşun kendisidir: her notanın ne kadar hızlı kaydığı ve ne kadar sürdüğü tasarlanmadı, gerçek {species} kayıtlarından ödünç alındı.',
       },
     },
+
+    wildVoices: {
+      title: 'Gerçek kuş sesleri',
+      lede: 'Bu sayfadaki diğer her şey bizim sesimiz. Bu beşi ise {species} kuşunun kendisi — modelin eğitildiği arşivden. Yanlarında da kod çözücümüzün onlardan okuduğu şey duruyor: tam olarak şu anda çaldığınız dosya üzerinde çalıştırıldı.',
+      body: 'Kod çözücü kapalı kümeli: otuz bir harfi var ve “bunların hiçbiri” diyebileceği bir yol yok, bu yüzden her zaman en iyi açıklamasını döndürür. Doğadan bir kayda tutulduğunda kendinden emin biçimde harfler döndürür ve bu harfler hiçbir şey ifade etmez. Farkı söyleyen metin değil, altındaki skordur: bizim motiflerimizden oluşan bütün bir dizinin, bizim sürelerimiz ve bizim aralıklarımızla, kaydın tamamını ne kadar iyi açıkladığı. Gerçek bir kuş bizimkine benzer notalar söyler; ama onları bizim gibi dizmez.',
+      clipLabel: 'Saha kaydı',
+      readsAs: 'Kod çözücümüz şunu okuyor',
+      readsNothing: 'hiçbir şey',
+      scoreLabel: 'Skor',
+      thresholdLabel: 'inanma eşiği',
+      messageScoreLabel: 'kendi mesajımız',
+      verdict: 'Eşiğin altında: mesaj olarak okunmadı.',
+      statsTitle: 'Hangi beşi ve neden bunlar',
+      licensable: 'Gösterilebilen',
+      licensableOf: '/ {total} külliyat kaydı',
+      recordings: 'Farklı kayıt',
+      recordingsNote:
+        'Burada yalnızca CC BY-SA lisanslı kayıtlar yayımlanabilir; külliyatın geri kalanı ticari olmayan lisanslarda. Bu, geriye tek bir kayıt bıraktığında beş klip tek bir kuşun beş ayrı bölümüdür.',
+      decoderLabel: 'Kod çözücü',
+      checkpointLabel: 'Kontrol noktası',
+    },
   },
 
   hero: {
@@ -545,6 +612,20 @@ const tr: Dictionary = {
     sub: 'Bir mesaj söyleyin. Kuş olarak ulaşsın — ve okunabilir ulaşsın. Gerçek dünyada bulduğunuz kuşlar, konuşabileceğiniz sesler olur.',
     demoTitle: 'Şimdi dinleyin',
     demoHint: 'Kurulum yok. Kayıt yok.',
+  },
+
+  encoder: {
+    title: 'Şimdi sizinki',
+    hint: 'En fazla 80 karakter. a–z, boşluk ve . , ? ’ seslendirilir; diğerleri duraklamaya dönüşer.',
+    placeholderStatic: 'Bir mesaj yazın…',
+    button: 'Encode',
+    encoding: 'Kodlanıyor…',
+    error: 'Kodlanamadı. Tekrar deneyin.',
+    unavailable: 'Canlı kodlama yerel bir kopyada çalışır — modelleri ve kayıt derlemini gerektirir, bunlar yayına alınmıyor. Yukarıdaki klipler aynı motorun önceden üretilmiş hali.',
+    resultLabel: 'Mesajınız',
+    voiceLabel: 'Ses',
+    trainedOnLabel: 'Eğitim verisi',
+    clips: '{n} klip',
   },
 
   demo: {
