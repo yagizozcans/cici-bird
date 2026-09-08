@@ -7,3 +7,5 @@ public/sitemap.xml
 public/sitemap-*.xml
 public/robots.txt
 tsconfig.tsbuildinfo
+.vercel
+.env*

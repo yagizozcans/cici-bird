@@ -1,0 +1,6 @@
+# Only the website is deployed. The project's Root Directory is `website`, so
+# Vercel builds from there — but a CLI deploy uploads from the repo ROOT, which
+# would otherwise ship ml/, engine/ and docs/ into the build container for no
+# reason. Ignore everything, then re-include the one directory that is served.
+/*
+!/website
