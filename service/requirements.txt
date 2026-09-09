@@ -1,0 +1,19 @@
+# The +cpu local version is not decoration: it exists ONLY on the PyTorch CPU
+# index, so pinning it stops pip resolving `torch==2.8.0` from PyPI instead,
+# which on Linux bundles the CUDA runtime — roughly 900 MB of wheels this
+# service cannot use. The encoder never calls .to(DEVICE); _load_net maps to
+# cpu and both synth passes are plain tensor math.
+#
+# torch-2.8.0+cpu-cp39-cp39-manylinux_2_28_x86_64.whl is published, and
+# python:3.9-slim (bookworm, glibc 2.36) satisfies manylinux_2_28.
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch==2.8.0+cpu
+
+# Same versions the checkpoints were rendered with (requirements.txt at the
+# repo root). The audio must not change because the host did.
+numpy==2.0.2
+scipy==1.13.1
+soundfile==0.13.1
+
+fastapi==0.115.6
+uvicorn==0.34.0

@@ -30,3 +30,6 @@ node_modules/
 # Vercel CLI
 .vercel
 /.env*
+
+# Assembled Hugging Face Space (service/build_space.sh). Built, not authored.
+/dist/
