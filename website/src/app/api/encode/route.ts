@@ -44,6 +44,8 @@ const CACHE_LIMIT = 50
 // 80-char cap and the cache are what bound the worst case.
 const RATE_LIMIT = 10
 const RATE_WINDOW_MS = 60_000
+/** The free Space sleeps; waking it costs a container start plus torch. */
+const SERVICE_TIMEOUT_MS = 90_000
 
 interface EncodeResult {
   src: string
@@ -95,18 +97,58 @@ function overRateLimit(request: Request): boolean {
   return recent.length > RATE_LIMIT
 }
 
+/**
+ * Call the hosted encoder through Gradio's API.
+ *
+ * Two requests, not one: Gradio queues work, so a call returns an `event_id`
+ * and the result arrives on a second, streaming request. The Space cannot
+ * expose a plain POST of its own — the Gradio runtime owns port 7860 and a
+ * second server there fails with EADDRINUSE — so this is the shape available.
+ *
+ * The free tier also sleeps when idle, and waking it means a container start
+ * plus the torch import. Wait for that rather than reporting a failure the
+ * visitor would only retry into.
+ */
 async function viaService(url: string, text: string, voice: string): Promise<WorkerPayload> {
-  // The free tier sleeps when idle, and waking it means a container boot plus
-  // the torch import. Wait for that rather than reporting a failure the user
-  // would only retry into.
-  const response = await fetch(`${url}/encode`, {
+  const started = await fetch(`${url}/gradio_api/call/encode_json`, {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
-    body: JSON.stringify({ text, voice }),
-    signal: AbortSignal.timeout(90_000),
+    body: JSON.stringify({ data: [text, voice] }),
+    signal: AbortSignal.timeout(SERVICE_TIMEOUT_MS),
   })
-  if (!response.ok) throw new Error(`service ${response.status}`)
-  return (await response.json()) as WorkerPayload
+  if (!started.ok) throw new Error(`service call ${started.status}`)
+  const { event_id: eventId } = (await started.json()) as { event_id?: string }
+  if (!eventId) throw new Error('service returned no event id')
+
+  const stream = await fetch(`${url}/gradio_api/call/encode_json/${eventId}`, {
+    signal: AbortSignal.timeout(SERVICE_TIMEOUT_MS),
+  })
+  if (!stream.ok) throw new Error(`service poll ${stream.status}`)
+
+  const payload = parseGradioEvents(await stream.text())
+  if ('error' in payload) throw new Error(String(payload.error))
+  return payload as unknown as WorkerPayload
+}
+
+/**
+ * Pull the completed result out of Gradio's SSE stream.
+ *
+ * The stream is blank-line-separated blocks of `event:` / `data:`, carrying
+ * heartbeats and progress before the one that matters. Only `complete` holds
+ * the answer, and its data is the function's output list — one element here,
+ * the JSON string `api_encode` returned.
+ */
+function parseGradioEvents(body: string): Record<string, unknown> {
+  for (const block of body.split(/\n\n/)) {
+    const event = block.match(/^event:\s*(.+)$/m)?.[1]?.trim()
+    const data = block.match(/^data:\s*([\s\S]*)$/m)?.[1]
+    if (!data) continue
+    if (event === 'error') throw new Error(`service error: ${data.slice(0, 200)}`)
+    if (event !== 'complete') continue
+    const outputs = JSON.parse(data) as unknown[]
+    return JSON.parse(String(outputs[0])) as Record<string, unknown>
+  }
+  throw new Error('service stream ended without a result')
 }
 
 async function viaLocalPython(text: string, voice: string): Promise<WorkerPayload> {

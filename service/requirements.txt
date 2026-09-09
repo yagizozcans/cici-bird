@@ -25,3 +25,10 @@ soundfile==0.13.1
 # pinned here: pinning them against gradio's range is how you get a resolver
 # conflict on a host you cannot debug interactively.
 gradio==6.26.0
+
+# ZeroGPU refuses to start a Space with no @spaces.GPU function ("No
+# @spaces.GPU function detected during startup"), and on the free tier a Gradio
+# Space only runs on ZeroGPU. app.py defines one marker function that is never
+# called; this is the package that provides the decorator. Unpinned because it
+# is the platform's own shim and the platform is what it has to match.
+spaces

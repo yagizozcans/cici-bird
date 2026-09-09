@@ -7,12 +7,20 @@ it. Same `encode_once.encode` on both sides — there is one renderer, and the
 transport is the only difference between a local clip and a hosted one.
 
 It deploys as a **Gradio Space**, so there is no Dockerfile: Hugging Face
-installs `requirements.txt` and runs `app.py` itself. Gradio is mounted at `/`
-— which gives the models a page someone can actually try, and answers the
-platform's health check — with `POST /encode` beside it as a plain FastAPI
-route. The site uses that one because it is a single request with a JSON body;
-Gradio's own REST API is a two-step call-then-poll, and the site does not need
-a queue to talk to itself.
+installs `requirements.txt` and runs `app.py` itself.
+
+**The platform owns the server.** An earlier version mounted FastAPI, served a
+plain `POST /encode`, and ran its own uvicorn — which died on the Hub with
+"[Errno 98] address already in use", because the Gradio runtime has already
+bound 7860 by the time `app.py` runs. So `app.py` is now the canonical shape
+(build `demo`, call `demo.launch()`), and the site reaches it through Gradio's
+own API at `/gradio_api/call/encode_json`: a POST returning an `event_id`, then
+a streaming GET carrying the result. `viaService` in the Next route does both
+and parses the SSE.
+
+There are two functions behind it. `encode` drives the visible demo, so the
+Space is a page someone can try. `encode_json` returns the exact payload the
+site needs, wired to hidden components purely to give it an `api_name`.
 
 ## Why the corpus is not deployed
 
@@ -147,7 +155,7 @@ longer matches the site's pre-rendered audio.
 |---|---|
 | `freeze_motifs.py` | writes `motifs.json`; needs the corpus, run locally |
 | `preload.py` | fills ml/'s caches from the motifs, then arms the tripwire |
-| `app.py` | Gradio UI at `/` plus `POST /encode` and `GET /health`; warms all three at startup |
+| `app.py` | the Gradio demo, the `encode_json` API, and the ZeroGPU marker; warms all three at import |
 | `build_space.sh` | assembles `dist/space` from this repo, incl. its `.gitattributes` |
 | `SPACE_README.md` | becomes the Space's own README (its YAML header selects the SDK) |
 

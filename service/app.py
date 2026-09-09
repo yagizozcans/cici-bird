@@ -1,4 +1,4 @@
-"""The hosted encoder: a Gradio Space that is also a plain HTTP endpoint.
+"""The hosted encoder, as a Gradio Space.
 
 Why this exists: encoding needs torch, the checkpoints and a motif library, and
 the site deploys `website/` to Vercel alone — where torch is ~200 MB against a
@@ -6,24 +6,29 @@ the site deploys `website/` to Vercel alone — where torch is ~200 MB against a
 set and shells out to the same `encode_once.encode` locally when it is not.
 There is one renderer; only the transport differs.
 
-TWO SURFACES, ONE APP. Gradio is mounted at `/`, so the Space has a face
-someone can actually try, and Gradio's own `/config` answers the platform's
-health check. `POST /encode` is a FastAPI route beside it, which the site uses
-because it is a single request with a plain JSON body — Gradio's REST API is a
-two-step call-then-poll, and the site does not need a queue to talk to itself.
+THE SPACE OWNS THE SERVER, NOT US. An earlier version mounted FastAPI, added a
+plain `POST /encode`, and ran its own uvicorn on 7860. It died on the Hub with
+"[Errno 98] address already in use": the Gradio runtime has already bound that
+port by the time app.py runs. So this is now the canonical shape — build
+`demo`, call `demo.launch()`, and let the platform do the rest — and the site
+talks to it through Gradio's own API instead of a route of ours.
+
+TWO FUNCTIONS, ONE RENDERER. `demo_encode` drives the visible demo and returns
+something a person can listen to. `api_encode` returns the exact JSON the site
+needs, as a string, and is wired to hidden components purely to give it an
+`api_name`. Both call `run()`.
+
+ONE ENCODE AT A TIME, deliberately. ml/generate.py mutates a module-global
+_SIG_MEAN inside _template_bank, so decoding two checkpoints concurrently in
+one interpreter mis-centres one of them. Encoding is ~0.5 s once warm, so the
+queue is short, and the alternative is a wrong answer rather than a slow one.
 
 The corpus is NOT here. preload.py fills the shape-library caches from
 motifs.json first, then makes every route back to the recordings raise, so a
 regression is a crash at startup rather than a bird that quietly changed.
-
-ONE ENCODE AT A TIME, deliberately. ml/generate.py mutates a module-global
-_SIG_MEAN inside _template_bank, so decoding two checkpoints concurrently in
-one interpreter mis-centres one of them. The local CLI avoids this with a
-process per request; a long-lived server has to take a lock. Encoding is ~0.5 s
-once warm, so the queue is short, and the alternative is a wrong answer rather
-than a slow one.
 """
 import base64
+import json
 import os
 import sys
 import tempfile
@@ -33,12 +38,7 @@ ROOT = os.path.dirname(os.path.abspath(__file__))
 for _sub in ("engine", "ml", os.path.join("website", "scripts")):
     sys.path.insert(0, os.path.join(ROOT, _sub))
 
-import gradio as gr                                      # noqa: E402
-import uvicorn                                           # noqa: E402
-from fastapi import FastAPI                               # noqa: E402
-from fastapi.middleware.cors import CORSMiddleware        # noqa: E402
-from fastapi.responses import JSONResponse                # noqa: E402
-from pydantic import BaseModel, Field                     # noqa: E402
+import gradio as gr                                       # noqa: E402
 
 import preload                                            # noqa: E402
 
@@ -49,51 +49,49 @@ import encode_once                                        # noqa: E402
 
 VOICES = ["bewicks-wren", "song-sparrow", "northern-cardinal"]
 MAX_CHARS = 80
-PORT = int(os.environ.get("PORT", 7860))
-
-# Only the site may call this from a browser. Set ALLOWED_ORIGIN to the
-# deployed origin in the Space's settings. The default is deliberately one
-# origin rather than "*", because an open endpoint is a free CPU faucet.
-ALLOWED_ORIGIN = os.environ.get("ALLOWED_ORIGIN", "https://cici-bird.vercel.app")
 
 _lock = threading.Lock()
 
-api = FastAPI(title="cici bird encoder")
-api.add_middleware(
-    CORSMiddleware,
-    allow_origins=[ALLOWED_ORIGIN],
-    allow_methods=["POST"],
-    allow_headers=["content-type"],
-)
 
+# ZeroGPU refuses to start a Space with no GPU-decorated function at all: "No
+# @spaces.GPU function detected during startup". On the free tier a Gradio
+# Space only runs on ZeroGPU, so one has to exist — even though nothing here
+# wants a GPU. This is never called; `_load_net` maps to cpu and both synth
+# passes are plain tensor math. The import is optional so the same file still
+# runs locally and anywhere that is not ZeroGPU.
+try:
+    import spaces                                         # noqa: E402
 
-class EncodeRequest(BaseModel):
-    text: str = Field(min_length=1, max_length=MAX_CHARS)
-    voice: str
-    seed: int = 0
+    @spaces.GPU(duration=1)
+    def _zerogpu_marker():
+        """Exists so ZeroGPU's startup check finds something. Never called."""
+        return "ok"
+except Exception:  # pragma: no cover - only ZeroGPU provides this package
+    pass
 
 
 def run(text, voice, seed=0):
     """The one entry point both surfaces use. Serialized; see the docstring."""
+    if voice not in VOICES:
+        raise encode_once.EncodeError(f"unknown voice {voice!r}")
+    if not text.strip():
+        raise encode_once.EncodeError("empty text")
     with _lock:
         return encode_once.encode(text[:MAX_CHARS], voice, seed)
 
 
-@api.get("/health")
-def health():
-    return {"ok": True, "voices": VOICES}
+def api_encode(text, voice):
+    """The site's endpoint. Returns the payload as a JSON string.
 
-
-@api.post("/encode")
-def post_encode(request: EncodeRequest):
-    if request.voice not in VOICES:
-        return JSONResponse({"error": "unknown voice"}, status_code=400)
-    if not request.text.strip():
-        return JSONResponse({"error": "empty text"}, status_code=400)
+    A string rather than a dict because Gradio types an output component, and
+    a Textbox carrying JSON survives the call/poll round trip unchanged — the
+    site parses it. Errors come back as {"error": ...} with a 200, since the
+    caller has to read the body either way.
+    """
     try:
-        return run(request.text, request.voice, request.seed)
+        return json.dumps(run(text, voice))
     except encode_once.EncodeError as exc:
-        return JSONResponse({"error": str(exc)}, status_code=400)
+        return json.dumps({"error": str(exc)})
 
 
 def demo_encode(text, voice):
@@ -106,13 +104,11 @@ def demo_encode(text, voice):
     tmp = tempfile.NamedTemporaryFile(suffix=".wav", delete=False)
     tmp.write(base64.b64decode(result["wavBase64"]))
     tmp.close()
-    accuracy = round(result["decodeAccuracy"] * 100)
-    read_back = (
+    return tmp.name, (
         f"Sung as: {result['normalizedText']}\n"
         f"Read back: {result['decodedText']}\n"
-        f"Decode accuracy: {accuracy}%"
+        f"Decode accuracy: {round(result['decodeAccuracy'] * 100)}%"
     )
-    return tmp.name, read_back
 
 
 with gr.Blocks(title="CICI BIRD encoder") as demo:
@@ -134,17 +130,25 @@ with gr.Blocks(title="CICI BIRD encoder") as demo:
     go.click(demo_encode, [text_in, voice_in], [audio_out, text_out],
              api_name="encode")
 
-
-app = gr.mount_gradio_app(api, demo, path="/")
+    # The site's endpoint. Hidden because it has no business on the page — the
+    # components exist only so the click has an api_name to be reached by.
+    with gr.Row(visible=False):
+        api_text = gr.Textbox()
+        api_voice = gr.Textbox()
+        api_out = gr.Textbox()
+        api_go = gr.Button()
+    api_go.click(api_encode, [api_text, api_voice], api_out,
+                 api_name="encode_json")
 
 
 def warm():
-    """Pay every cold start once, at boot, not on a visitor's first click."""
+    """Pay every cold start once, at import, not on a visitor's first click."""
     for slug in VOICES:
         run("warm", slug)
     print("warm: all three voices loaded", flush=True)
 
 
+warm()
+
 if __name__ == "__main__":
-    warm()
-    uvicorn.run(app, host="0.0.0.0", port=PORT)
+    demo.launch(server_name="0.0.0.0", server_port=int(os.environ.get("PORT", 7860)))
