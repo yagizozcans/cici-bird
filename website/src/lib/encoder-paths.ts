@@ -39,10 +39,22 @@ export const ENCODE_SCRIPT = path.join(SCRIPTS_DIR, 'encode_once.py')
 /** The venv requirements.txt pins, and the checkpoints were rendered with. */
 const VENV_PYTHON = path.join(ROOT, '.venv', 'bin', 'python')
 
-/** The hosted encoder, if this deployment has one. */
+/**
+ * The hosted encoder, if this deployment has one.
+ *
+ * The scheme is added when it is missing, because the value is typed into a
+ * dashboard by hand and Hugging Face displays the host without one. Set as
+ * `yagizozcan-cici-bird.hf.space`, the URL below has no scheme, and `fetch`
+ * rejects it before any request goes out — `TypeError: fetch failed / unknown
+ * scheme`, observed in production as a 500 in 0.7 s. Defaulting to https
+ * rather than rejecting the value: a bare host is unambiguous, and there is no
+ * plausible deployment where the right answer was plain http.
+ */
 export function serviceUrl(): string | null {
-  const url = process.env.ENCODE_SERVICE_URL?.trim()
-  return url ? url.replace(/\/$/, '') : null
+  const raw = process.env.ENCODE_SERVICE_URL?.trim()
+  if (!raw) return null
+  const url = /^https?:\/\//.test(raw) ? raw : `https://${raw}`
+  return url.replace(/\/$/, '')
 }
 
 export function pythonBin(): string {
