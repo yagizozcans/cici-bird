@@ -1,10 +1,19 @@
-# The +cpu local version is not decoration: it exists ONLY on the PyTorch CPU
-# index, so pinning it stops pip resolving `torch==2.8.0` from PyPI instead,
-# which on Linux bundles the CUDA runtime — roughly 900 MB of wheels this
-# service cannot use. The encoder never calls .to(DEVICE); _load_net maps to
-# cpu and both synth passes are plain tensor math.
+# The pin is PLAIN 2.8.0, but the wheel that lands is the CPU one.
+#
+# Hugging Face validates this file as text: with `torch==2.8.0+cpu` a ZeroGPU
+# Space refuses to start with "torch version in requirements.txt is not
+# compatible with ZeroGPU. Supported versions: ... 2.8.0" — it does not
+# recognise the local version. Dropping `+cpu` satisfies that check, and pip
+# still installs the CPU build, because PEP 440 sorts `2.8.0+cpu` ABOVE plain
+# `2.8.0` and both satisfy `==2.8.0`, so the extra index wins on version order.
+#
+# Verified, not reasoned about — `pip download` for cp312/manylinux_2_28_x86_64
+# with these two lines fetches torch-2.8.0+cpu-...manylinux_2_28_x86_64.whl
+# (183.9 MB). If that ever stops being true the symptom is a ~900 MB CUDA wheel
+# in the build log, which this service cannot use: the encoder never calls
+# .to(DEVICE), _load_net maps to cpu and both synth passes are plain tensor math.
 --extra-index-url https://download.pytorch.org/whl/cpu
-torch==2.8.0+cpu
+torch==2.8.0
 
 # The versions the checkpoints were rendered with (requirements.txt at the repo
 # root). The audio must not change because the host did.

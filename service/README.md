@@ -98,12 +98,19 @@ that quietly became a different bird.
    the checkpoints into pointers. If a plain-git commit already exists, delete
    `dist/space-repo` and redo step 2 rather than trying to rewrite it.
 
-3. **Lock it to your site.** In the Space's *Settings → Variables*, set
+3. **Set the hardware to CPU basic.** In *Settings → Space hardware*, pick
+   **CPU basic · free**. ZeroGPU is the wrong fit and the Space refuses to
+   start on it: it validates the torch pin as text, and it expects the `spaces`
+   package and `@spaces.GPU` decorators this app does not use. Nothing here
+   wants a GPU — `_load_net` maps to cpu and both synth passes are plain tensor
+   math.
+
+4. **Lock it to your site.** In the Space's *Settings → Variables*, set
    `ALLOWED_ORIGIN` to your deployed origin. It defaults to
    `https://cici-bird.vercel.app`, and it is a CORS allowlist rather than `*`
    because an open endpoint is a free CPU faucet.
 
-4. **Point the site at it.** In Vercel → *Settings → Environment Variables*:
+5. **Point the site at it.** In Vercel → *Settings → Environment Variables*:
 
    ```
    ENCODE_SERVICE_URL = https://<you>-<space>.hf.space
