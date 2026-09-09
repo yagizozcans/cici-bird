@@ -43,36 +43,24 @@ that quietly became a different bird.
 1. **Create the Space.** On huggingface.co: *New* → *Space*, SDK **Gradio**.
    No Docker involved.
 
-   **Choose "CPU basic · FREE" as the hardware while creating it.** This is the
-   one setting you cannot correct afterwards: a Space created on ZeroGPU
-   refuses to downgrade without a PRO subscription — "Without a PRO
-   subscription, you can't downgrade this Space to cpu-basic" — so the only
-   remedy is to delete it and make another. Nothing is lost when you do;
-   `build_space.sh` regenerates the whole tree.
+   **Leave the hardware alone.** On the free tier, Gradio Spaces run on
+   ZeroGPU — "Subscribe to PRO for unlocking free cpu-basic flavor" — so
+   cpu-basic is not selectable, and a Space created on ZeroGPU cannot be
+   downgraded later without PRO either. That is fine here: ZeroGPU instances
+   are CPU machines that attach a GPU only when a `@spaces.GPU` function is
+   called, and this app never defines one. `_load_net` maps to cpu and both
+   synth passes are plain tensor math.
 
-   ZeroGPU is also the wrong tier on its merits. It validates the torch pin as
-   text and expects the `spaces` package and `@spaces.GPU` decorators this app
-   does not use, and nothing here wants a GPU — `_load_net` maps to cpu and
-   both synth passes are plain tensor math. The failure it produces names
-   torch, not hardware, which is what makes it worth saying twice.
+   The one thing ZeroGPU does impose is a **torch allowlist, checked against
+   the text of requirements.txt** — which is why the pin there is plain
+   `torch==2.8.0` and not `2.8.0+cpu`. See that file for why the CPU wheel
+   still lands. A Space stuck on this reports stage `CONFIG_ERROR` and names
+   torch; no hardware is allocated and nothing is billed while it sits there.
 
-   **Authenticate before you push**, or the push is rejected by a pre-receive
-   hook with "You are not authorized to push to this repo" — cloning a public
-   Space needs no credentials, so the first sign of trouble comes at the end.
-
-   Either register an SSH key at <https://huggingface.co/settings/keys> and use
-   `git@hf.co:spaces/<you>/<space>` as the remote (`ssh -T git@hf.co` answers
-   "Hi <your name>" once it is registered, and "Hi anonymous" until then), or
-   create a token with the **Write** role at
-   <https://huggingface.co/settings/tokens> and give it to git when prompted.
-
-   On macOS the token route has a trap: git caches the credential in the login
-   keychain under the account `hf_user`, so a read-only or expired token keeps
-   being reused and a new one is never asked for. Clear it first:
-
-   ```bash
-   printf 'protocol=https\nhost=huggingface.co\n\n' | git credential-osxkeychain erase
-   ```
+   If Docker appears as a selectable SDK on your account with cpu-basic
+   available, that is the tidier target — the restriction quoted above is
+   specific to Gradio Spaces. This directory deploys equally well either way;
+   only the Space metadata differs.
 
 2. **Assemble, then sync into a clone of the Space.** The Space directory is
    built, never hand-maintained — it is a copy of the files the encoder
