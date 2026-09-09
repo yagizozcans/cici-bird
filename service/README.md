@@ -6,6 +6,14 @@ function limit, so the encoder runs here instead and `/api/encode` proxies to
 it. Same `encode_once.encode` on both sides — there is one renderer, and the
 transport is the only difference between a local clip and a hosted one.
 
+It deploys as a **Gradio Space**, so there is no Dockerfile: Hugging Face
+installs `requirements.txt` and runs `app.py` itself. Gradio is mounted at `/`
+— which gives the models a page someone can actually try, and answers the
+platform's health check — with `POST /encode` beside it as a plain FastAPI
+route. The site uses that one because it is a single request with a JSON body;
+Gradio's own REST API is a two-step call-then-poll, and the site does not need
+a queue to talk to itself.
+
 ## Why the corpus is not deployed
 
 The shape library is ~1,100–1,600 real notes per species. But `motif_assignment`
@@ -32,8 +40,8 @@ that quietly became a different bird.
 
 ## Deploying
 
-1. **Create the Space.** On huggingface.co: *New* → *Space*, SDK **Docker**,
-   hardware **CPU basic (free)**. Note its git URL.
+1. **Create the Space.** On huggingface.co: *New* → *Space*, SDK **Gradio**,
+   hardware **CPU basic (free)**. Note its git URL. No Docker involved.
 
 2. **Assemble and push.** The Space directory is built, never hand-maintained —
    it is a copy of the files the encoder imports, laid out the way this repo
@@ -48,7 +56,8 @@ that quietly became a different bird.
    ```
 
    The build takes a few minutes, mostly the torch wheel. Watch the Space's
-   *Logs* tab; `warm: all three voices loaded` means it is ready.
+   *Logs* tab; `warm: all three voices loaded` means it is ready, and the
+   Space's own page is a working demo of the three voices.
 
 3. **Lock it to your site.** In the Space's *Settings → Variables*, set
    `ALLOWED_ORIGIN` to your deployed origin. It defaults to
@@ -98,7 +107,14 @@ longer matches the site's pre-rendered audio.
 |---|---|
 | `freeze_motifs.py` | writes `motifs.json`; needs the corpus, run locally |
 | `preload.py` | fills ml/'s caches from the motifs, then arms the tripwire |
-| `app.py` | FastAPI: `POST /encode`, `GET /health`; warms all three at startup |
+| `app.py` | Gradio UI at `/` plus `POST /encode` and `GET /health`; warms all three at startup |
 | `build_space.sh` | assembles `dist/space` from this repo |
-| `Dockerfile` | python:3.9-slim, CPU torch, listens on 7860 |
-| `SPACE_README.md` | becomes the Space's own README (its YAML header configures it) |
+| `SPACE_README.md` | becomes the Space's own README (its YAML header selects the SDK) |
+
+## Python version
+
+The checkpoints were rendered on Python 3.9.6, and Gradio 6 requires 3.10+, so
+the Space runs a newer interpreter than this repo's `.venv`. That was checked
+rather than hoped: with the same `torch`/`numpy`/`scipy` pins, Python 3.9.6 and
+3.12.14 produce **byte-identical WAVs** for all three voices. The pins are what
+hold the audio still, not the interpreter.

@@ -7,6 +7,9 @@
 # the deploy. Re-run this after changing ml/, engine/, encode_once.py or the
 # motifs, then commit and push inside dist/space.
 #
+# The Space uses the Gradio SDK, so there is no Dockerfile: Hugging Face
+# installs requirements.txt itself and runs app.py.
+#
 # Deliberately NOT copied: data/, the feature caches, website/ beyond the two
 # scripts. If the Space ever needs one of those, the frozen motifs have stopped
 # doing their job and that is the thing to fix.
@@ -30,7 +33,7 @@ done
 cp "$root"/engine/*.py                    "$out/engine/"
 cp "$root"/website/scripts/generate_audio.py "$out/website/scripts/"
 cp "$root"/website/scripts/encode_once.py    "$out/website/scripts/"
-cp "$here"/{Dockerfile,requirements.txt,app.py,preload.py,motifs.json} "$out/"
+cp "$here"/{requirements.txt,app.py,preload.py,motifs.json} "$out/"
 cp "$here"/SPACE_README.md                "$out/README.md"
 
 # ml/species.py refuses a species whose clip directory is missing. The clips
