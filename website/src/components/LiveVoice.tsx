@@ -1,10 +1,10 @@
 'use client'
 
-import { createContext, useContext } from 'react'
+import { createContext, useContext, useEffect, useRef } from 'react'
 import { useAudio, type AudioController } from './useAudio'
 import { AudioPlayerView, type AudioPlayerViewProps } from './AudioPlayer'
 import type { PlayableAudio } from '@/data/audio-manifest'
-import { SCORE, scoreX, type VoiceScore } from '@/lib/voice-score'
+import { SCORE_HEIGHT, scoreX, type VoiceScore } from '@/lib/voice-score'
 
 /**
  * The living mark on a trained species' page.
@@ -70,18 +70,39 @@ export function LiveVoiceMark({
   // Before the first play the mark is just the mark, so nothing is dimmed to
   // "not yet sung" — a header cell of 22 faint notes reads as a broken image.
   const started = t > 0 || player.isPlaying
-  const head = scoreX(t, score.duration)
+  const head = scoreX(t)
   const [lo, hi] = score.domain
+
+  // The score is wider than any column it sits in, so the visitor can swipe
+  // through the message — and while it plays, it swipes itself.
+  const scroller = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    const el = scroller.current
+    if (!el || !started) return
+    // Centred, not edge-following: the note being sung should have the notes
+    // on either side of it visible, which is the whole reason to see a score
+    // rather than a level meter. Set directly rather than with smooth
+    // scrolling — `position` already arrives once a frame, and a queued smooth
+    // scroll would spend every frame chasing the previous frame's target.
+    el.scrollLeft = head - el.clientWidth / 2
+  }, [head, started])
 
   return (
     <div
       className="flex h-full flex-col overflow-hidden rounded-xl2 border border-line"
       style={{ backgroundColor: palette.wash }}
     >
+      {/* `overscroll-x-contain` so a swipe that runs off the end of the score
+          does not become the browser's back gesture. */}
+      <div
+        ref={scroller}
+        className="flex flex-1 items-center overflow-x-auto overscroll-x-contain"
+      >
       <svg
-        viewBox={`0 0 ${SCORE.width} ${SCORE.height}`}
-        preserveAspectRatio="xMidYMid meet"
-        className="block w-full flex-1"
+        width={score.width}
+        height={SCORE_HEIGHT}
+        viewBox={`0 0 ${score.width} ${SCORE_HEIGHT}`}
+        className="block shrink-0"
         role="img"
         aria-label={label}
       >
@@ -134,15 +155,16 @@ export function LiveVoiceMark({
             x1={head}
             y1="0"
             x2={head}
-            y2={SCORE.height}
+            y2={SCORE_HEIGHT}
             stroke={palette.accent}
             strokeOpacity="0.55"
             strokeWidth="1.5"
           />
         )}
       </svg>
+      </div>
 
-      <p className="flex items-baseline justify-between gap-3 border-t border-line/70 px-3 py-2 font-mono text-[10px] text-muted">
+      <p className="flex flex-wrap items-baseline justify-between gap-x-3 border-t border-line/70 px-3 py-2 font-mono text-[10px] text-muted">
         <span>{caption}</span>
         <span className="shrink-0 tabular-nums">
           {(lo / 1000).toFixed(1)}–{(hi / 1000).toFixed(1)} kHz

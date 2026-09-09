@@ -28,16 +28,30 @@ import { contourDomain, letterIndex } from './voice-space'
  * real loudness), and at 25 px per note the other 16 samples are invisible.
  */
 
-/** viewBox of the mark. 2.5:1, the shape a header cell wants. */
-export const SCORE = { width: 760, height: 304 } as const
+/**
+ * The score is drawn at a FIXED TIME SCALE and scrolls, rather than fitting a
+ * whole message into whatever box it is given.
+ *
+ * Fitting is what the first version did, and it made the mark unreadable. In a
+ * 300 px column a 4.5 s clip gives a 130 ms note about 14 screen px, while the
+ * pitch it sweeps inside that note is ~50 px tall — so every note drew as a
+ * near-vertical scratch and the shape of the song was invisible. At 380 px per
+ * second the same note is ~49 px wide against ~84 px of sweep: still steep,
+ * because a wren's f0 genuinely leaps, but now a contour rather than a spike.
+ *
+ * One unit is one CSS pixel here — the SVG carries explicit width and height
+ * and is not scaled — so these numbers mean what they say on screen.
+ */
+export const SCORE_HEIGHT = 260
+const PX_PER_SECOND = 380
 
 const PAD_X = 8
 const PAD_Y = 16
-/** Samples kept per note. A note is ~25–50 px wide here; 16 is ~2 px apart. */
+/** Samples kept per note. A note is ~35–95 px wide here; 16 is ~3 px apart. */
 const SAMPLES = 16
 /** Half-thickness of the ribbon at silence and at full loudness, px. */
-const HALF_MIN = 0.9
-const HALF_MAX = 6.5
+const HALF_MIN = 1.1
+const HALF_MAX = 8
 
 export interface ScoreNote {
   ch: string
@@ -55,6 +69,8 @@ export interface ScoreNote {
 
 export interface VoiceScore {
   notes: ScoreNote[]
+  /** Drawn width, px. Wider than any column it sits in — the box scrolls. */
+  width: number
   /** Whole-kHz rules across the pitch range, as one path. */
   lanes: string
   /** Pitch range the rules and the contours share, Hz. */
@@ -66,19 +82,17 @@ export interface VoiceScore {
 const r1 = (v: number) => Math.round(v * 10) / 10
 
 /**
- * Where a moment in the clip falls across the mark.
+ * Where a moment in the clip falls across the mark, in px from its left edge.
  *
- * Callers round the result to a whole unit. One viewBox unit is under 0.6 px
- * wherever this mark is drawn, and the samples inside a note are only ~2 units
- * apart, so a tenth of a unit is invisible and costs a character in every
- * coordinate — of which one page has about 1,300, twice over (the markup and
- * the escaped copy of it in the RSC payload). Y keeps its decimal: the ribbon
- * is as thin as 1.8 units at a note's quietest, and rounding both edges to the
- * same integer would erase it.
+ * Callers round the result to a whole pixel. The samples inside a note are
+ * ~3 px apart, so a tenth of a pixel is invisible and costs a character in
+ * every coordinate — of which one page has about 1,300, twice over (the
+ * markup, and the escaped copy of it in the RSC payload). Y keeps its decimal:
+ * the ribbon is only 2.2 px thick at a note's quietest, and rounding both
+ * edges to the same integer would erase it.
  */
-export function scoreX(t: number, duration: number): number {
-  const k = duration > 0 ? Math.max(0, Math.min(t / duration, 1)) : 0
-  return PAD_X + k * (SCORE.width - PAD_X * 2)
+export function scoreX(t: number): number {
+  return PAD_X + Math.max(0, t) * PX_PER_SECOND
 }
 
 export function layoutVoiceScore(
@@ -92,8 +106,10 @@ export function layoutVoiceScore(
   // keeps the playhead and the seek bar underneath on the same clock.
   const duration = durationSec || (cues.length ? cues[cues.length - 1].t1 : 1)
 
+  const width = Math.round(PAD_X * 2 + duration * PX_PER_SECOND)
+
   const y = (hz: number) =>
-    SCORE.height - PAD_Y - ((hz - lo) / (hi - lo || 1)) * (SCORE.height - PAD_Y * 2)
+    SCORE_HEIGHT - PAD_Y - ((hz - lo) / (hi - lo || 1)) * (SCORE_HEIGHT - PAD_Y * 2)
 
   const notes: ScoreNote[] = []
   for (const cue of cues) {
@@ -116,7 +132,7 @@ export function layoutVoiceScore(
     let pi = at[0]
     for (const i of at) {
       const u = i / (n - 1)
-      const px = Math.round(scoreX(cue.t0 + u * (cue.t1 - cue.t0), duration))
+      const px = Math.round(scoreX(cue.t0 + u * (cue.t1 - cue.t0)))
       const py = y(letter.f0[i])
       const half = HALF_MIN + letter.env[i] * (HALF_MAX - HALF_MIN)
       top.push(`${px},${r1(py - half)}`)
@@ -129,7 +145,7 @@ export function layoutVoiceScore(
       t0: cue.t0,
       t1: cue.t1,
       body: `M${top.join('L')}L${bottom.join('L')}Z`,
-      px: Math.round(scoreX(cue.t0 + (pi / (n - 1)) * (cue.t1 - cue.t0), duration)),
+      px: Math.round(scoreX(cue.t0 + (pi / (n - 1)) * (cue.t1 - cue.t0))),
       py: r1(y(letter.f0[pi])),
       env: at.map((i) => Math.round(letter.env[i] * 100) / 100),
     })
@@ -141,8 +157,8 @@ export function layoutVoiceScore(
   // marks rather than two pictures scaled to fill their own boxes.
   const rules: string[] = []
   for (let hz = Math.ceil(lo / 1000) * 1000; hz <= hi; hz += 1000) {
-    rules.push(`M0,${Math.round(y(hz))}H${SCORE.width}`)
+    rules.push(`M0,${Math.round(y(hz))}H${width}`)
   }
 
-  return { notes, lanes: rules.join(''), domain, duration }
+  return { notes, width, lanes: rules.join(''), domain, duration }
 }

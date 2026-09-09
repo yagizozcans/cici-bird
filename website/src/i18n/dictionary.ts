@@ -344,7 +344,7 @@ const en = {
     encodedSample: 'A message in this voice',
     encodedSampleNote: 'Encoded with the same engine the app uses.',
     score: {
-      caption: 'Every note, at the pitch it is sung',
+      caption: 'Every note at its pitch · swipe',
       stageLabel:
         'The message below, drawn as a score: every note {species} sings, at the time and the pitch it is sung. It lights up as the clip plays.',
     },
@@ -800,7 +800,7 @@ const tr: Dictionary = {
     encodedSample: 'Bu sesle bir mesaj',
     encodedSampleNote: 'Uygulamanın kullandığı motorla kodlandı.',
     score: {
-      caption: 'Her nota, söylendiği perdede',
+      caption: 'Her nota kendi perdesinde · kaydırın',
       stageLabel:
         'Aşağıdaki mesajın notaya dökülmüş hâli: {species} kuşunun söylediği her nota, söylendiği anda ve perdede. Kayıt çalarken aydınlanır.',
     },
