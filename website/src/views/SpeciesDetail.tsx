@@ -16,6 +16,13 @@ import {
 } from '@/data/species'
 import { getTrainedVoice, toPlayable } from '@/data/audio-manifest'
 import { TrainedVoicePanel } from '@/components/TrainedVoicePanel'
+import {
+  LiveVoiceMark,
+  LiveVoiceMessage,
+  LiveVoiceProvider,
+} from '@/components/LiveVoice'
+import { voiceSpace } from '@/data/lab'
+import { layoutVoiceScore } from '@/lib/voice-score'
 import { breadcrumbLd, graph, speciesLd } from '@/lib/jsonld'
 
 /**
@@ -46,6 +53,13 @@ export function SpeciesDetail({
   const findable = species.unlock.findable
   // Non-null only for a species with a trained model behind its voice.
   const trainedVoice = getTrainedVoice(species.slug)
+  const message = toPlayable(encoded.id)
+  // The mark for a trained voice is the message itself, drawn from the cues
+  // and contours that voice actually produced. A parametric voice has no such
+  // measurement, so those seven species keep the synthesized signature.
+  const score = trainedVoice
+    ? layoutVoiceScore(voiceSpace(species.slug), message.cues, message.durationSec)
+    : null
 
   const ld = graph([
     breadcrumbLd(
@@ -71,6 +85,11 @@ export function SpeciesDetail({
           ← {dict.species.backToCatalog}
         </Link>
       </div>
+
+      {/* The mark and the message player share one playhead, so the mark can
+          light the note being sung. The provider renders no element of its
+          own — see components/LiveVoice.tsx. */}
+      <LiveVoiceProvider audio={message} speciesSlug={species.slug}>
 
       {/* ------------------------------------------------------------------ */}
       {/* Identity                                                            */}
@@ -108,9 +127,23 @@ export function SpeciesDetail({
           </p>
         </div>
 
-        <div className="overflow-hidden rounded-xl2 border border-line">
-          <SpeciesArtwork species={species} locale={locale} variant="hero" className="h-full w-full" />
-        </div>
+        {score ? (
+          <LiveVoiceMark
+            score={score}
+            palette={species.palette}
+            label={dict.species.score.stageLabel.replace('{species}', name)}
+            caption={dict.species.score.caption}
+          />
+        ) : (
+          <div className="overflow-hidden rounded-xl2 border border-line">
+            <SpeciesArtwork
+              species={species}
+              locale={locale}
+              variant="hero"
+              className="h-full w-full"
+            />
+          </div>
+        )}
       </section>
 
       {/* ------------------------------------------------------------------ */}
@@ -142,19 +175,19 @@ export function SpeciesDetail({
           <h2 className="mb-4 text-[11px] font-semibold uppercase tracking-[0.12em] text-muted">
             {dict.species.encodedSample}
           </h2>
-          <AudioPlayer
-            audio={toPlayable(encoded.id)}
+          <LiveVoiceMessage
+            audio={message}
             label={encoded.text ?? name}
             variant="feature"
             accentColor={species.palette.accent}
             playLabel={dict.demo.play}
             pauseLabel={dict.demo.pause}
             subtitleHint={dict.species.encodedSampleNote}
-            analyticsEvent="sample_play"
-            analyticsProps={{ species: species.slug, surface: 'species-encoded' }}
           />
         </div>
       </section>
+
+      </LiveVoiceProvider>
 
       {trainedVoice && (
         <TrainedVoicePanel

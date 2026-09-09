@@ -343,6 +343,11 @@ const en = {
     realCall: 'The real call',
     encodedSample: 'A message in this voice',
     encodedSampleNote: 'Encoded with the same engine the app uses.',
+    score: {
+      caption: 'Every note, at the pitch it is sung',
+      stageLabel:
+        'The message below, drawn as a score: every note {species} sings, at the time and the pitch it is sung. It lights up as the clip plays.',
+    },
     whereWhen: 'Where and when',
     regions: 'Range',
     seasons: 'Season',
@@ -794,6 +799,11 @@ const tr: Dictionary = {
     realCall: 'Gerçek ötüşü',
     encodedSample: 'Bu sesle bir mesaj',
     encodedSampleNote: 'Uygulamanın kullandığı motorla kodlandı.',
+    score: {
+      caption: 'Her nota, söylendiği perdede',
+      stageLabel:
+        'Aşağıdaki mesajın notaya dökülmüş hâli: {species} kuşunun söylediği her nota, söylendiği anda ve perdede. Kayıt çalarken aydınlanır.',
+    },
     whereWhen: 'Nerede ve ne zaman',
     regions: 'Yayılış',
     seasons: 'Mevsim',

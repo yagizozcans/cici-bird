@@ -26,10 +26,13 @@ export function SpeciesArtwork({
   className?: string
   variant?: 'card' | 'hero'
 }) {
+  // ONE note at either size. The hero used to draw two, and because the note
+  // is identical in every repeat that read as a duplicated image rather than
+  // as a phrase — the same shape twice, gap in the middle. The wide OG card
+  // still draws four, where the repeat reads as a run of song.
   const svg = voiceSignatureSvg(species, {
     width: 400,
     height: variant === 'hero' ? 260 : 200,
-    notes: variant === 'hero' ? 2 : 1,
   })
 
   return (
