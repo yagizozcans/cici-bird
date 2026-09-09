@@ -43,6 +43,24 @@ that quietly became a different bird.
 1. **Create the Space.** On huggingface.co: *New* → *Space*, SDK **Gradio**,
    hardware **CPU basic (free)**. Note its git URL. No Docker involved.
 
+   **Authenticate before you push**, or the push is rejected by a pre-receive
+   hook with "You are not authorized to push to this repo" — cloning a public
+   Space needs no credentials, so the first sign of trouble comes at the end.
+
+   Either register an SSH key at <https://huggingface.co/settings/keys> and use
+   `git@hf.co:spaces/<you>/<space>` as the remote (`ssh -T git@hf.co` answers
+   "Hi <your name>" once it is registered, and "Hi anonymous" until then), or
+   create a token with the **Write** role at
+   <https://huggingface.co/settings/tokens> and give it to git when prompted.
+
+   On macOS the token route has a trap: git caches the credential in the login
+   keychain under the account `hf_user`, so a read-only or expired token keeps
+   being reused and a new one is never asked for. Clear it first:
+
+   ```bash
+   printf 'protocol=https\nhost=huggingface.co\n\n' | git credential-osxkeychain erase
+   ```
+
 2. **Assemble, then sync into a clone of the Space.** The Space directory is
    built, never hand-maintained — it is a copy of the files the encoder
    imports, laid out the way this repo lays them out so `generate_audio.py`'s
