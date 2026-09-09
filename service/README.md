@@ -40,8 +40,21 @@ that quietly became a different bird.
 
 ## Deploying
 
-1. **Create the Space.** On huggingface.co: *New* → *Space*, SDK **Gradio**,
-   hardware **CPU basic (free)**. Note its git URL. No Docker involved.
+1. **Create the Space.** On huggingface.co: *New* → *Space*, SDK **Gradio**.
+   No Docker involved.
+
+   **Choose "CPU basic · FREE" as the hardware while creating it.** This is the
+   one setting you cannot correct afterwards: a Space created on ZeroGPU
+   refuses to downgrade without a PRO subscription — "Without a PRO
+   subscription, you can't downgrade this Space to cpu-basic" — so the only
+   remedy is to delete it and make another. Nothing is lost when you do;
+   `build_space.sh` regenerates the whole tree.
+
+   ZeroGPU is also the wrong tier on its merits. It validates the torch pin as
+   text and expects the `spaces` package and `@spaces.GPU` decorators this app
+   does not use, and nothing here wants a GPU — `_load_net` maps to cpu and
+   both synth passes are plain tensor math. The failure it produces names
+   torch, not hardware, which is what makes it worth saying twice.
 
    **Authenticate before you push**, or the push is rejected by a pre-receive
    hook with "You are not authorized to push to this repo" — cloning a public
@@ -98,19 +111,12 @@ that quietly became a different bird.
    the checkpoints into pointers. If a plain-git commit already exists, delete
    `dist/space-repo` and redo step 2 rather than trying to rewrite it.
 
-3. **Set the hardware to CPU basic.** In *Settings → Space hardware*, pick
-   **CPU basic · free**. ZeroGPU is the wrong fit and the Space refuses to
-   start on it: it validates the torch pin as text, and it expects the `spaces`
-   package and `@spaces.GPU` decorators this app does not use. Nothing here
-   wants a GPU — `_load_net` maps to cpu and both synth passes are plain tensor
-   math.
-
-4. **Lock it to your site.** In the Space's *Settings → Variables*, set
+3. **Lock it to your site.** In the Space's *Settings → Variables*, set
    `ALLOWED_ORIGIN` to your deployed origin. It defaults to
    `https://cici-bird.vercel.app`, and it is a CORS allowlist rather than `*`
    because an open endpoint is a free CPU faucet.
 
-5. **Point the site at it.** In Vercel → *Settings → Environment Variables*:
+4. **Point the site at it.** In Vercel → *Settings → Environment Variables*:
 
    ```
    ENCODE_SERVICE_URL = https://<you>-<space>.hf.space
