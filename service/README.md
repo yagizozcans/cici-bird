@@ -84,11 +84,19 @@ that quietly became a different bird.
    Re-run those four lines to redeploy; the clone already has the right history,
    so `rsync && git add -A && git commit && git push` is the whole update loop.
 
-   **git-lfs is not needed**, and `build_space.sh` writes a `.gitattributes`
-   that keeps it that way. The Hub's default routes `*.pt` through LFS, but the
-   checkpoints are 556 KB each — far under the 10 MB above which the Hub
-   actually requires it — and with that rule in place `git add` fails outright
-   on a machine without git-lfs installed.
+   **git-lfs is required.** The Hub rejects binary files pushed through plain
+   git *at any size* — not just above the 10 MB LFS threshold, which is a
+   different rule — so the three 556 KB checkpoints have to go through LFS or
+   the push dies in the pre-receive hook naming them. `build_space.sh` writes
+   the `.gitattributes` for it; install the tool once:
+
+   ```bash
+   brew install git-lfs && git lfs install
+   ```
+
+   Install it *before* the first `git add`, since that is when the filter turns
+   the checkpoints into pointers. If a plain-git commit already exists, delete
+   `dist/space-repo` and redo step 2 rather than trying to rewrite it.
 
 3. **Lock it to your site.** In the Space's *Settings → Variables*, set
    `ALLOWED_ORIGIN` to your deployed origin. It defaults to
