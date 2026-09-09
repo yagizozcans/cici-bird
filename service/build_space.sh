@@ -36,6 +36,16 @@ cp "$root"/website/scripts/encode_once.py    "$out/website/scripts/"
 cp "$here"/{requirements.txt,app.py,preload.py,motifs.json} "$out/"
 cp "$here"/SPACE_README.md                "$out/README.md"
 
+# Hugging Face seeds a new Space with a .gitattributes that routes *.pt through
+# Git LFS. Ours are 556 KB each, far under the 10 MB above which the Hub
+# actually requires LFS, so that rule buys nothing and costs a git-lfs install
+# — without which `git add` fails outright with "git-lfs: command not found".
+# Overwrite it: mark the checkpoints binary so no newline conversion touches
+# them, and commit them as ordinary blobs.
+cat > "$out/.gitattributes" <<'ATTR'
+*.pt binary
+ATTR
+
 # ml/species.py refuses a species whose clip directory is missing. The clips
 # are never read — the frozen motifs replace them — but the guard runs first.
 # .gitkeep because git does not track empty directories, and this tree is

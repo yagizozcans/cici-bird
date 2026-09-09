@@ -43,21 +43,34 @@ that quietly became a different bird.
 1. **Create the Space.** On huggingface.co: *New* → *Space*, SDK **Gradio**,
    hardware **CPU basic (free)**. Note its git URL. No Docker involved.
 
-2. **Assemble and push.** The Space directory is built, never hand-maintained —
-   it is a copy of the files the encoder imports, laid out the way this repo
-   lays them out so `generate_audio.py`'s `parents[2]` still resolves.
+2. **Assemble, then sync into a clone of the Space.** The Space directory is
+   built, never hand-maintained — it is a copy of the files the encoder
+   imports, laid out the way this repo lays them out so `generate_audio.py`'s
+   `parents[2]` still resolves.
+
+   Clone the Space rather than `git init`-ing a new repo: the Hub seeds a new
+   Space with its own commit (a README and a `.gitattributes`), so a fresh
+   history is *unrelated* to it and the push is rejected with "fetch first".
 
    ```bash
-   ./service/build_space.sh          # writes dist/space (gitignored)
-   cd dist/space
-   git init -b main && git add -A && git commit -m "cici bird encoder"
-   git remote add origin https://huggingface.co/spaces/<you>/<space>
-   git push -u origin main
+   ./service/build_space.sh                  # writes dist/space (gitignored)
+   cd dist
+   git clone https://huggingface.co/spaces/<you>/<space> space-repo
+   rsync -a --exclude .git space/ space-repo/
+   cd space-repo && git add -A && git commit -m "cici bird encoder" && git push
    ```
 
-   The build takes a few minutes, mostly the torch wheel. Watch the Space's
-   *Logs* tab; `warm: all three voices loaded` means it is ready, and the
-   Space's own page is a working demo of the three voices.
+   `--exclude .git` matters: without it you would copy over the clone's own
+   repository and lose the remote.
+
+   Re-run those four lines to redeploy; the clone already has the right history,
+   so `rsync && git add -A && git commit && git push` is the whole update loop.
+
+   **git-lfs is not needed**, and `build_space.sh` writes a `.gitattributes`
+   that keeps it that way. The Hub's default routes `*.pt` through LFS, but the
+   checkpoints are 556 KB each — far under the 10 MB above which the Hub
+   actually requires it — and with that rule in place `git add` fails outright
+   on a machine without git-lfs installed.
 
 3. **Lock it to your site.** In the Space's *Settings → Variables*, set
    `ALLOWED_ORIGIN` to your deployed origin. It defaults to
@@ -96,7 +109,7 @@ Rate limiting lives in the Next route (10/min per IP), not here.
 ## Regenerating the motifs
 
 Run `python service/freeze_motifs.py` **locally**, where `data/` and the feature
-caches are, then re-run `build_space.sh` and push. Do this whenever a checkpoint
+caches are, then re-run `build_space.sh` and the sync loop in step 2. Do this whenever a checkpoint
 changes, or a species' band, window or clip selection changes — anything that
 moves the shape library moves the motifs, and a stale bank is a voice that no
 longer matches the site's pre-rendered audio.
@@ -108,7 +121,7 @@ longer matches the site's pre-rendered audio.
 | `freeze_motifs.py` | writes `motifs.json`; needs the corpus, run locally |
 | `preload.py` | fills ml/'s caches from the motifs, then arms the tripwire |
 | `app.py` | Gradio UI at `/` plus `POST /encode` and `GET /health`; warms all three at startup |
-| `build_space.sh` | assembles `dist/space` from this repo |
+| `build_space.sh` | assembles `dist/space` from this repo, incl. its `.gitattributes` |
 | `SPACE_README.md` | becomes the Space's own README (its YAML header selects the SDK) |
 
 ## Python version
